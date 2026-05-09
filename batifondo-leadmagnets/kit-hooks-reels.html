@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kit de Ganchos Visuales para Reels · Batifondo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Calistoga&family=Nunito:wght@400;700&family=Poppins:wght@700&family=Rock+Salt&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --lime: #c8e000;
+      --blue: #4d6af5;
+      --hot-pink: #ec4899;
+      --purple: #5569f5;
+      --dark: #1e2a6e;
+      --white: #fff;
+      --mid: #555;
+      --cream: #f7f9ff;
+      --sand: rgba(77,106,245,0.15);
+      --accent: #c8e000;
+      --accent-light: #c8e000;
+    }
+    body { font-family: 'Nunito', sans-serif; background: var(--white); color: var(--dark); }
+
+    .header {
+      background: var(--lime);
+      color: var(--dark);
+      padding: 4rem 2rem 3rem;
+      text-align: center;
+    }
+    .eyebrow { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--dark); opacity: 0.6; margin-bottom: 1.5rem; }
+    .header h1 { font-family: 'Calistoga', serif; font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 400; line-height: 1.15; margin-bottom: 1rem; color: var(--dark); }
+    .header h1 em { font-style: normal; color: var(--blue); }
+    .header p { font-size: 0.95rem; color: var(--dark); opacity: 0.75; max-width: 520px; margin: 0 auto 2rem; line-height: 1.7; }
+    .header-pills { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+    .pill { background: rgba(30,42,110,0.08); border: 2px solid var(--dark); padding: 0.4rem 1rem; font-size: 0.72rem; color: var(--dark); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: 0.05em; }
+
+    .intro { max-width: 720px; margin: 0 auto; padding: 3rem 2rem 1rem; }
+    .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; }
+    .intro-card { background: var(--white); border: 2px solid var(--sand); padding: 1.25rem; }
+    .intro-card h3 { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.4rem; }
+    .intro-card p { font-size: 0.78rem; color: var(--mid); line-height: 1.6; }
+    .intro-card .ico { font-size: 1.4rem; margin-bottom: 0.5rem; }
+
+    .section-title { max-width: 760px; margin: 3rem auto 0; padding: 0 1.5rem; }
+    .section-title h2 { font-family: 'Calistoga', serif; font-size: 1.6rem; font-weight: 400; margin-bottom: 0.25rem; }
+    .section-title p { font-size: 0.85rem; color: var(--mid); }
+
+    .hooks-grid { max-width: 760px; margin: 1.5rem auto; padding: 0 1.5rem 4rem; display: grid; gap: 1.25rem; }
+
+    .hook-card {
+      background: var(--white);
+      border-radius: 16px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      min-height: 180px;
+    }
+
+    /* phone mockup */
+    .hook-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem 1rem;
+      position: relative;
+    }
+    .phone-frame {
+      width: 90px;
+      height: 140px;
+      border-radius: 14px;
+      border: 3px solid rgba(255,255,255,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .phone-frame::before {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 3px;
+      background: rgba(255,255,255,0.4);
+      border-radius: 100px;
+    }
+    .phone-text {
+      font-size: 0.65rem;
+      font-weight: 700;
+      line-height: 1.25;
+      color: white;
+      position: relative;
+      z-index: 1;
+    }
+    .hook-num {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      font-size: 0.6rem;
+      font-weight: 700;
+      padding: 0.15rem 0.45rem;
+      border-radius: 100px;
+      letter-spacing: 0.05em;
+    }
+
+    .hook-body { padding: 1.5rem 1.5rem 1.5rem 0; display: flex; flex-direction: column; justify-content: space-between; }
+    .hook-type {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .hook-text {
+      font-family: 'Calistoga', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      line-height: 1.35;
+      margin-bottom: 0.75rem;
+      font-style: italic;
+    }
+    .hook-alt {
+      font-size: 0.78rem;
+      color: var(--mid);
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+    .hook-alt strong { color: var(--dark); font-style: normal; }
+
+    .hook-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 0.75rem; }
+    .h-tag { font-size: 0.62rem; padding: 0.2rem 0.55rem; border-radius: 4px; font-weight: 500; }
+
+    .canva-tip {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 0.65rem 0.85rem;
+      font-size: 0.72rem;
+      color: var(--mid);
+      line-height: 1.5;
+    }
+    .canva-tip strong { color: var(--dark); display: block; margin-bottom: 0.15rem; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; }
+
+    /* Formula section */
+    .formula-section {
+      background: var(--blue);
+      color: var(--white);
+      padding: 4rem 2rem;
+    }
+    .formula-inner { max-width: 720px; margin: 0 auto; }
+    .formula-inner h2 { font-family: 'Calistoga', serif; font-size: 1.6rem; font-weight: 400; margin-bottom: 0.5rem; }
+    .formula-inner > p { font-size: 0.88rem; color: rgba(255,255,255,0.8); line-height: 1.7; margin-bottom: 2rem; }
+    .formula-steps { display: flex; flex-direction: column; gap: 1rem; }
+    .formula-step {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 1rem;
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      padding: 1rem;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .f-num {
+      width: 40px;
+      height: 40px;
+      background: var(--lime);
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .f-content h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.25rem; }
+    .f-content p { font-size: 0.8rem; color: var(--sand); line-height: 1.6; }
+
+    /* dos and donts */
+    .rules { max-width: 720px; margin: 0 auto; padding: 3rem 2rem 4rem; }
+    .rules h2 { font-family: 'Calistoga', serif; font-size: 1.6rem; margin-bottom: 1.5rem; }
+    .rules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    .r-card { border-radius: 10px; padding: 1rem; font-size: 0.82rem; line-height: 1.5; }
+    .r-do { background: #D1F2E1; }
+    .r-do strong { color: #145A32; display: block; margin-bottom: 0.3rem; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; }
+    .r-dont { background: #FADBD8; }
+    .r-dont strong { color: #7B241C; display: block; margin-bottom: 0.3rem; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; }
+
+    .cta-footer { background: var(--blue); color: var(--white); text-align: center; padding: 4rem 2rem; }
+    .cta-footer h2 { font-family: 'Calistoga', serif; font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 400; margin-bottom: 0.75rem; }
+    .cta-footer h2 em { font-style: normal; color: var(--lime); }
+    .cta-footer p { font-size: 0.88rem; color: rgba(255,255,255,0.8); max-width: 460px; margin: 0 auto 2rem; line-height: 1.7; }
+    .cta-btn { display: inline-block; background: var(--lime); color: var(--dark); padding: 0.9rem 2.2rem; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 0.88rem; text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em; }
+    .footer-brand { margin-top: 2.5rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+
+    @media (max-width: 560px) {
+      .hook-card { grid-template-columns: 1fr; }
+      .hook-visual { padding: 1.25rem; border-bottom: 1px solid var(--cream); }
+      .hook-body { padding: 1.25rem; }
+      .rules-grid { grid-template-columns: 1fr; }
+      .intro-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="eyebrow">Batifondo · Kit Gratuito</div>
+  <h1>Ganchos visuales<br>para tus <em>Reels</em></h1>
+  <p>10 hooks de alto impacto con guía de diseño en Canva para capturar la atención en los primeros 3 segundos.</p>
+  <div class="header-pills">
+    <span class="pill">✦ 10 hooks listos para usar</span>
+    <span class="pill">✦ Tips de diseño en Canva</span>
+    <span class="pill">✦ Variantes de copy</span>
+  </div>
+</div>
+
+<div class="intro">
+  <p style="font-size:0.9rem; color:var(--mid); line-height:1.8;">El gancho visual es lo primero que ve tu audiencia. Tenés <strong style="color:var(--dark)">3 segundos</strong> para que decidan seguir viendo o hacer scroll. Estas 10 plantillas están diseñadas para detener el pulgar y forzar la atención.</p>
+  <div class="intro-grid">
+    <div class="intro-card">
+      <div class="ico">🎯</div>
+      <h3>¿Qué es un hook visual?</h3>
+      <p>Un gancho es el primer frame de tu video. Un texto o imagen diseñada para crear tensión, curiosidad o identificación inmediata.</p>
+    </div>
+    <div class="intro-card">
+      <div class="ico">⚡</div>
+      <h3>¿Por qué funcionan?</h3>
+      <p>El algoritmo premia el tiempo de reproducción. Un buen hook aumenta el watch-time, que a su vez aumenta el alcance orgánico.</p>
+    </div>
+    <div class="intro-card">
+      <div class="ico">🎨</div>
+      <h3>Cómo usarlos en Canva</h3>
+      <p>Cada hook viene con instrucciones de diseño. Abrí Canva → formato 9:16 → aplicá el texto y los tips de composición.</p>
+    </div>
+    <div class="intro-card">
+      <div class="ico">✏️</div>
+      <h3>Personalizalos</h3>
+      <p>Los textos son puntos de partida. Adaptá la fórmula a tu nicho, tu voz y tu cliente ideal. El copy es tuyo.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section-title">
+  <h2>Los 10 hooks</h2>
+  <p>Copialos, adaptá el texto a tu nicho y aplicá los tips de diseño en Canva.</p>
+</div>
+
+<div class="hooks-grid">
+
+  <!-- HOOK 1 -->
+  <div class="hook-card">
+    <div class="hook-visual" style="background: linear-gradient(135deg, #1A1A18 0%, #4A3728 100%);">
+      <div class="hook-num">01</div>
+      <div class="phone-frame">
+        <div class="phone-text">Lo que nadie te dice sobre el branding</div>
+      </div>
+    </div>
+    <div class="hook-body">
+      <div>
+        <div class="hook-type" style="color:#B8860B">Tipo: El secreto revelado</div>
+        <div class="hook-text">"Lo que nadie te dice sobre [tu tema]"</div>
+        <div class="hook-alt">
+          Variantes: <strong>"Lo que tu diseñadora no quiere que sepas"</strong> · <strong>"El error que cometen el 90% de las marcas"</strong>
+        </div>
+        <div class="hook-tags">
+          <span class="h-tag" style="background:#FEF9E7;color:#7D6608">Alta curiosidad</span>
+          <span class="h-tag" style="background:#FEF9E7;color:#7D6608">Educativo</span>
+        </div>
+      </div>
+      <div class="canva-tip">
+        <strong>✦ Canva: cómo diseñarlo</strong>
+        Fondo oscuro (negro, verde botella, marrón profundo). Texto en blanco, tamaño grande, centrado. Fuente: Playfair Display italic o Montserrat Bold. Podés agregar una línea decorativa fina bajo el texto.
+      </div>
+    </div>
+  </div>
+
+  <!-- HOOK 2 -->
+  <div class="hook-card">
+    <div class="hook-visual" style="background: linear-gradient(135deg, #C0392B 0%, #922B21 100%);">
+      <div class="hook-num">02</div>
+      <div class="phone-frame">
+        <div class="phone-text">Para de hacer esto en tu feed ahora mismo</div>
+      </div>
+    </div>
+    <div class="hook-body">
+      <div>
+        <div class="hook-type" style="color:#C0392B">Tipo: La llamada de atención</div>
+        <div class="hook-text">"Para de hacer esto en [contexto] ahora mismo"</div>
+        <div class="hook-alt">
+          Variantes: <strong>"Dejá de usar estas fuentes en tu marca"</strong> · <strong>"Esto está arruinando tu presencia visual"</strong>
+        </div>
+        <div class="hook-tags">
+          <span class="h-tag" style="background:#FADBD8;color:#7B241C">Alto impacto</span>
+          <span class="h-tag" style="background:#FADBD8;color:#7B241C">Urgencia</span>
+        </div>
+      </div>
+      <div class="canva-tip">
+        <strong>✦ Canva: cómo diseñarlo</strong>
+        Fondo rojo o coral intenso. Texto en blanco con letras grandes. Podés usar MAYÚSCULAS para "PARA". Agregá un emoji ✋ o 🚨 antes del texto para parar el scroll.
+      </div>
+    </div>
+  </div>
+
+  <!-- HOOK 3 -->
+  <div class="hook-card">
+    <div class="hook-visual" style="background: linear-gradient(135deg, #2C3E50 0%, #1a252f 100%);">
+      <div class="hook-num">03</div>
+      <div class="phone-frame">
+        <div class="phone-text">3 señales de que tu marca se ve amateur</div>
+      </div>
+    </div>
+    <div class="hook-body">
+      <div>
+        <div class="hook-type" style="color:#85C1E9">Tipo: El número mágico</div>
+        <div class="hook-text">"[Número] señales / errores / razones de que [situación]"</div>
+        <div class="hook-alt">
+          Variantes: <strong>"5 fuentes gratuitas que parecen de lujo"</strong> · <strong>"3 colores que nunca deberías usar juntos"</strong>
+        </div>
+        <div class="hook-tags">
+          <span class="h-tag" style="background:#D6EAF8;color:#1A5276">Lista</span>
+          <span class="h-tag" style="background:#D6EAF8;color:#1A5276">Educativo</span>
+          <span class="h-tag" style="background:#D6EAF8;color:#1A5276">Fácil de consumir</span>
+        </div>
+      </div>
+      <div class="canva-tip">
+        <strong>✦ Canva: cómo diseñarlo</strong>
+        El número en tamaño enorme (tipografía serif, mucho espacio). El resto del texto en sans-serif pequeño debajo. Esquema: número en color acento, fondo oscuro neutro.
+      </div>
+    </div>
+  </div>
+
+  <!-- HOOK 4 -->
+  <div class="hook-card">
+    <div class="hook-visual" style="background: linear-gradient(135deg, #7D3C98 0%, #4A235A 100%);">
+      <div class="hook-num">04</div>
+      <div class="phone-frame">
+        <div class="phone-text">¿Tu logo comunica lo que creés que comunica?</div>
+      </div>
+    </div>
+    <div class="hook-body">
+      <div>
+        <div class="hook-type" style="color:#C39BD3">Tipo: La pregunta incómoda</div>
+        <div class="hook-text">"¿[Suposición que tu audiencia da por hecho pero no es cierta]?"</div>
+        <div class="hook-alt">
+          Variantes: <strong>"¿Sabés realmente qué transmite tu paleta de colores?"</strong> · <strong>"¿Tu tipografía está trabajando para vos o en tu contra?"</strong>
+        </div>
+        <div class="hook-tags">
+          <span class="h-tag" style="background:#E8DAEF;color:#4A235A">Reflexión</span>
+          <span class="h-tag" style="background:#E8DAEF;color:#4A235A">Identificación</span>
+        </div>
+      </div>
+      <div class="canva-tip">
+        <strong>✦ Canva: cómo diseñarlo</strong>
+        Empezá el texto con el signo ¿ en grande y en color diferente. Fondo violeta o azul profundo. El texto de la pregunta en blanco, italic, tamaño grande centrado verticalmente.
+      </div>
+    </div>
+  </div>
+
+  <!-- HOOK 5 -->
+  <div class="hook-card">
+    <div class="hook-visual" style="background: linear-gradient(135deg, #27AE60 0%, #1e8449 100%);">
+      <div class="hook-num">05</div>
+      <div class="phone-frame">
+        <div class="phone-text">Antes vs. después de trabajar tu marca</div>
+      </div>
+    </div>
+    <div class="hook-body">
+      <div>
+        <div class="hook-type" style="color:#A9DFBF">Tipo: Antes / Después</div>
+        <div class="hook-text">"Antes vs. después de [tu servicio o proceso]"</div>
+        <div class="hook-alt">
+          Variantes: <strong>"Esto era su marca. Esto es ahora."</strong> · <strong>"6 semanas de diferencia"</strong>
+        </div>
+        <div class="hook-tags">
+          <span class="h-tag" style="background:#D5F5E3;color:#145A32">Prueba social</span>
+          <span class="h-tag" style="background:#D5F5E3;color:#145A32">Resultados</span>
+        </div>
+      </div>
+      <div class="canva-tip">
+        <strong>✦ Canva: cómo diseñarlo</strong>
+        División vertical u horizontal: mitad izquierda oscura (antes), mitad derecha clara (después). Texto "ANTES" y "DESPUÉS" o "BEFORE/AFTER" superpuesto. Simple y poderoso.
+      </div>
+    </div>
+  </div>
+
+  <!-- HOOK 6 -->
+  <div class="hook-card">
+    <div class="hook-visual" style="background: linear-gradient(135deg, #D4547A 0%, #A0294F 100%);">
+      <div class="hook-num">06</div>
+      <div class="phone-frame">
+        <div class="phone-text">Si recién empezás tu marca, mirá esto primero</div>
+      </div>
+    </div>
+    <div class="hook-body">
+      <div>
+        <div class="hook-type" style="color:#F1948A">Tipo: La identificación directa</div>
+        <div class="hook-text">"Si [descripción de tu cliente ideal], mirá esto primero"</div>
+        <div class="hook-alt">
+          Variantes: <strong>"Si tu marca no tiene una paleta definida, este video es para vos"</strong> · <strong>"Para las que diseñan sus propias piezas en Canva"</strong>
+        </div>
+        <div class="hook-tags">
+          <span class="h-tag" style="background:#FDEDEC;color:#922B21">Segmentado</span>
+          <span class="h-tag" style="background:#FDEDEC;color:#922B21">Alta conversión</span>
+        </div>
+      </div>
+      <div class="canva-tip">
+        <strong>✦ Canva: cómo diseñarlo</strong>
+        La palabra "Si" muy grande, en una esquina. El resto del texto en cuerpo menor. Fondo con tu color de marca. Podés agregar una flecha apuntando al texto central para generar dirección visual.
+      </div>
+    </div>
+  </div>
+
+  <!-- HOOK 7 -->
+  <div class="hook-card">
+    <div class="hook-visual" style="background: linear-gradient(135deg, #B8860B 0%, #7D5A00 100%);">
+      <div class="hook-num">07</div>
+      <div class="phone-frame">
+        <div class="phone-text">Cómo pasé de cobrar $500 a $5000 por un diseño</div>
+      </div>
+    </div>
+    <div class="hook-body">
+      <div>
+        <div class="hook-type" style="color:#F8D568">Tipo: La historia de transformación</div>
+        <div class="hook-text">"Cómo pasé de [punto A] a [punto B]"</div>
+        <div class="hook-alt">
+          Variantes: <strong>"De hacer diseños gratis a tener una lista de espera"</strong> · <strong>"Cómo construí mi marca sin saber nada de diseño"</strong>
+        </div>
+        <div class="hook-tags">
+          <span class="h-tag" style="background:#FEF9E7;color:#7D6608">Storytelling</span>
+          <span class="h-tag" style="background:#FEF9E7;color:#7D6608">Aspiracional</span>
+        </div>
+      </div>
+      <div class="canva-tip">
+        <strong>✦ Canva: cómo diseñarlo</strong>
+        Los números en colores contrastantes ($500 en gris / $5000 en dorado o tu color acento). Fondo oscuro que dé sensación de calidad. Tipografía serif para el número grande.
+      </div>
+    </div>
+  </div>
+
+  <!-- HOOK 8 -->
+  <div class="hook-card">
+    <div class="hook-visual" style="background: linear-gradient(135deg, #2980B9 0%, #1a5276 100%);">
+      <div class="hook-num">08</div>
+      <div class="phone-frame">
+        <div class="phone-text">La verdad sobre por qué tu marca no conecta</div>
+      </div>
+    </div>
+    <div class="hook-body">
+      <div>
+        <div class="hook-type" style="color:#85C1E9">Tipo: La verdad incómoda</div>
+        <div class="hook-text">"La verdad sobre por qué [problema de tu audiencia]"</div>
+        <div class="hook-alt">
+          Variantes: <strong>"Por qué tu logo no está funcionando (y cómo saberlo)"</strong> · <strong>"La razón real de que no te contraten"</strong>
+        </div>
+        <div class="hook-tags">
+          <span class="h-tag" style="background:#D6EAF8;color:#1A5276">Tensión</span>
+          <span class="h-tag" style="background:#D6EAF8;color:#1A5276">Diagnóstico</span>
+        </div>
+      </div>
+      <div class="canva-tip">
+        <strong>✦ Canva: cómo diseñarlo</strong>
+        "LA VERDAD" en mayúsculas, tamaño grande, en blanco. El resto en un tono más suave. Un fondo sólido de color intenso. Sin elementos decorativos extra: que el texto lo sea todo.
+      </div>
+    </div>
+  </div>
+
+  <!-- HOOK 9 -->
+  <div class="hook-card">
+    <div class="hook-visual" style="background: linear-gradient(135deg, #4A7C59 0%, #2D4A35 100%);">
+      <div class="hook-num">09</div>
+      <div class="phone-frame">
+        <div class="phone-text">Lo que haría diferente si empezara de cero hoy</div>
+      </div>
+    </div>
+    <div class="hook-body">
+      <div>
+        <div class="hook-type" style="color:#A9DFBF">Tipo: La lección aprendida</div>
+        <div class="hook-text">"Lo que haría diferente si empezara de cero hoy"</div>
+        <div class="hook-alt">
+          Variantes: <strong>"Lo que aprendí después de 3 años diseñando marcas"</strong> · <strong>"El consejo que le daría a mi yo de hace 5 años"</strong>
+        </div>
+        <div class="hook-tags">
+          <span class="h-tag" style="background:#D5F5E3;color:#145A32">Conexión</span>
+          <span class="h-tag" style="background:#D5F5E3;color:#145A32">Autoridad</span>
+        </div>
+      </div>
+      <div class="canva-tip">
+        <strong>✦ Canva: cómo diseñarlo</strong>
+        Paleta terrosa o verde oscuro. Tipografía serif italic, texto alineado a la izquierda. Podés agregar una textura de grano sutil como fondo para dar calidez. Muy efectivo con una foto tuya de fondo con overlay oscuro.
+      </div>
+    </div>
+  </div>
+
+  <!-- HOOK 10 -->
+  <div class="hook-card">
+    <div class="hook-visual" style="background: linear-gradient(135deg, #1A1A18 0%, #2C2C2C 100%);">
+      <div class="hook-num">10</div>
+      <div class="phone-frame" style="border-color:rgba(232,213,163,0.4);">
+        <div class="phone-text">Guardá esto: el checklist de marca que deberías hacer hoy</div>
+      </div>
+    </div>
+    <div class="hook-body">
+      <div>
+        <div class="hook-type" style="color:#E8D5A3">Tipo: El recurso accionable</div>
+        <div class="hook-text">"Guardá esto: [recurso útil que tu audiencia quiere tener a mano]"</div>
+        <div class="hook-alt">
+          Variantes: <strong>"Guardá este video: las fuentes que uso en todos mis proyectos"</strong> · <strong>"Screenshoteau esto: la fórmula para una paleta perfecta"</strong>
+        </div>
+        <div class="hook-tags">
+          <span class="h-tag" style="background:#EAECEE;color:#1A1A18">Guardados</span>
+          <span class="h-tag" style="background:#EAECEE;color:#1A1A18">Algoritmo ↑</span>
+          <span class="h-tag" style="background:#EAECEE;color:#1A1A18">Valor</span>
+        </div>
+      </div>
+      <div class="canva-tip">
+        <strong>✦ Canva: cómo diseñarlo</strong>
+        El ícono de "guardar" 🔖 o una flecha hacia abajo muy grande como elemento visual principal. Fondo negro o muy oscuro. Texto en blanco o dorado. Este hook aumenta los "guardados", métrica que impulsa mucho el alcance.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FORMULA -->
+<section class="formula-section">
+  <div class="formula-inner">
+    <h2>La fórmula de un hook que convierte</h2>
+    <p>No alcanza con tener un buen texto. El hook visual tiene que funcionar como sistema: texto + diseño + primeros segundos del video alineados.</p>
+    <div class="formula-steps">
+      <div class="formula-step">
+        <div class="f-num">1</div>
+        <div class="f-content">
+          <h3>Frame 0–1 seg: el texto del hook (este kit)</h3>
+          <p>Lo que aparece en la pantalla antes de que empiece a escucharse audio. Tiene que ser legible en un segundo y generar suficiente tensión para que no hagan scroll.</p>
+        </div>
+      </div>
+      <div class="formula-step">
+        <div class="f-num">2</div>
+        <div class="f-content">
+          <h3>Segundos 1–3: la promesa de lo que viene</h3>
+          <p>Tu voz o un texto en pantalla que confirma que el video va a resolver lo que el hook planteó. El algoritmo mide si siguen viendo después de los 3 segundos.</p>
+        </div>
+      </div>
+      <div class="formula-step">
+        <div class="f-num">3</div>
+        <div class="f-content">
+          <h3>El desarrollo: entregá lo prometido</h3>
+          <p>Si prometiste 3 errores, dá 3 errores. Si prometiste una verdad, decila. Los hooks que no cumplen lo que prometen destrozan la confianza y el watch-time.</p>
+        </div>
+      </div>
+      <div class="formula-step">
+        <div class="f-num">4</div>
+        <div class="f-content">
+          <h3>El cierre: llamada a la acción</h3>
+          <p>Pedí lo que querés: guardalo, seguíme, comentá tu respuesta. Una CTA específica multiplica el resultado. Nunca cierres sin pedirle algo al que llegó hasta el final.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RULES -->
+<section class="rules">
+  <h2>Reglas de oro del diseño de hooks</h2>
+  <div class="rules-grid">
+    <div class="r-card r-do"><strong>✓ Hacé esto</strong>Texto grande y legible incluso en pantalla pequeña. Si hay que hacer zoom para leerlo, perdiste.</div>
+    <div class="r-card r-dont"><strong>✗ Evitá esto</strong>Demasiado texto en el frame inicial. Máximo 1-2 líneas. El hook no es el contenido, es la puerta.</div>
+    <div class="r-card r-do"><strong>✓ Hacé esto</strong>Usá tus colores de marca. Cada hook es branding. La consistencia visual construye reconocimiento.</div>
+    <div class="r-card r-dont"><strong>✗ Evitá esto</strong>Fondos con mucho ruido o texturas complejas que compiten con el texto y lo hacen ilegible.</div>
+    <div class="r-card r-do"><strong>✓ Hacé esto</strong>Testá el hook en pantalla de celular antes de publicar. Es como lo van a ver el 95% de tus seguidores.</div>
+    <div class="r-card r-dont"><strong>✗ Evitá esto</strong>Clickbait que no cumple. Un hook engañoso destroza la confianza y aumenta el abandono temprano.</div>
+  </div>
+</section>
+
+<section class="cta-footer">
+  <h2>¿Querés contenido que<br><em>realmente posicione tu marca?</em></h2>
+  <p>En Batifondo no solo diseñamos logos. Creamos el sistema visual completo para que tu contenido sea reconocible, profesional y consistente en todos los canales.</p>
+  <a href="#" class="cta-btn">Trabajemos juntas →</a>
+  <div class="footer-brand">© Batifondo · Todos los derechos reservados</div>
+</section>
+
+</body>
+</html>

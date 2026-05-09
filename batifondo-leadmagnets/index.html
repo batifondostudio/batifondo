@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kit de Recursos · Batifondo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Calistoga&family=Nunito:wght@400;700&family=Poppins:wght@700&family=Rock+Salt&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --lime: #c8e000;
+      --blue: #4d6af5;
+      --hot-pink: #ec4899;
+      --purple: #5569f5;
+      --dark: #1e2a6e;
+      --white: #fff;
+      --mid: #555;
+      /* aliases para compatibilidad */
+      --cream: #fff;
+      --sand: rgba(77,106,245,0.15);
+      --accent: #c8e000;
+      --accent-light: #c8e000;
+    }
+    body { font-family: 'Nunito', sans-serif; background: var(--white); color: var(--dark); min-height: 100vh; }
+
+    .header {
+      background: var(--lime);
+      padding: 3.5rem 2rem 3rem;
+      text-align: center;
+      color: var(--dark);
+    }
+    .brand { font-family: 'Calistoga', serif; font-size: 1.5rem; font-weight: 400; letter-spacing: 0.05em; margin-bottom: 0.4rem; color: var(--dark); }
+    .brand em { font-style: normal; color: var(--blue); }
+    .tagline { font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; color: var(--dark); letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 2.5rem; opacity: 0.7; }
+    .header h1 { font-family: 'Calistoga', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 400; line-height: 1.25; margin-bottom: 0.75rem; color: var(--dark); }
+    .header h1 em { font-style: normal; color: var(--blue); }
+    .header p { font-size: 0.95rem; color: var(--dark); opacity: 0.8; max-width: 480px; margin: 0 auto; line-height: 1.7; }
+
+    .main { max-width: 860px; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+
+    .section-label {
+      font-family: 'Rock Salt', cursive;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--hot-pink);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--lime);
+    }
+
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 3rem;
+    }
+
+    .resource-card {
+      background: var(--white);
+      border-radius: 16px;
+      overflow: hidden;
+      text-decoration: none;
+      color: var(--dark);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1.5px solid transparent;
+    }
+    .resource-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); border-color: var(--sand); }
+
+    .card-visual {
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 1.5rem;
+    }
+    .card-visual-icon { font-size: 3rem; position: relative; z-index: 1; }
+    .card-visual-title {
+      position: absolute;
+      bottom: 1rem;
+      left: 1.25rem;
+      right: 1.25rem;
+      font-family: 'Calistoga', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      z-index: 1;
+    }
+
+    .card-body { padding: 1.25rem; flex: 1; display: flex; flex-direction: column; }
+    .card-name { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.4rem; }
+    .card-desc { font-size: 0.8rem; color: var(--mid); line-height: 1.6; flex: 1; margin-bottom: 1rem; }
+    .card-pills { display: flex; gap: 0.35rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .card-pill { font-size: 0.62rem; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: 500; background: var(--cream); color: var(--mid); }
+    .card-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--white);
+      background: var(--blue);
+      padding: 0.55rem 1rem;
+      transition: background 0.2s;
+      align-self: flex-start;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .resource-card:hover .card-cta { background: var(--dark); }
+
+    /* Coming soon cards */
+    .resource-card.coming {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+    .coming-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      border-radius: 100px;
+      z-index: 2;
+    }
+
+    /* Tip box */
+    .tip-box {
+      background: var(--blue);
+      color: var(--white);
+      border-radius: 0;
+      padding: 2rem;
+      margin-bottom: 3rem;
+      border-left: 6px solid var(--lime);
+    }
+    .tip-box h2 { font-family: 'Calistoga', serif; font-size: 1.3rem; font-weight: 400; margin-bottom: 1rem; }
+    .tip-list { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+    .tip-list li { font-size: 0.85rem; color: rgba(255,255,255,0.85); line-height: 1.6; padding-left: 1.25rem; position: relative; }
+    .tip-list li::before { content: '★'; position: absolute; left: 0; color: var(--lime); font-size: 0.65rem; top: 0.15rem; }
+
+    .footer {
+      background: var(--blue);
+      color: var(--white);
+      text-align: center;
+      padding: 3rem 2rem;
+    }
+    .footer h2 { font-family: 'Calistoga', serif; font-size: 1.4rem; font-weight: 400; margin-bottom: 0.5rem; }
+    .footer h2 em { font-style: normal; color: var(--lime); }
+    .footer p { font-size: 0.85rem; color: rgba(255,255,255,0.8); max-width: 420px; margin: 0 auto 1.5rem; line-height: 1.7; }
+    .footer-btn { display: inline-block; background: var(--lime); color: var(--dark); padding: 0.8rem 2rem; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 0.85rem; text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em; }
+    .footer-copy { margin-top: 2.5rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; color: rgba(255,255,255,0.3); letter-spacing: 0.15em; text-transform: uppercase; }
+
+    @media (max-width: 560px) {
+      .resources-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="brand"><em>Batifondo</em></div>
+  <div class="tagline">Recursos gratuitos de marca</div>
+  <h1>Todo lo que necesitás para<br>que tu marca se vea <em>profesional</em></h1>
+  <p>Recursos gratuitos para emprendedoras y marcas personales que quieren dejar de improvisar.</p>
+</div>
+
+<div class="main">
+
+  <div class="section-label">Recursos disponibles ahora</div>
+
+  <div class="resources-grid">
+
+    <a href="auditoria-de-marca.html" class="resource-card">
+      <div class="card-visual" style="background: linear-gradient(135deg, #1A1A18 0%, #3D2B1F 100%);">
+        <div class="card-visual-icon">◈</div>
+        <div class="card-visual-title">Auditoría de marca en 15 minutos</div>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Auditoría de Marca Interactiva</div>
+        <div class="card-desc">15 preguntas sobre logo, tipografía, color y comunicación. Resultado inmediato con diagnóstico y recomendaciones personalizadas.</div>
+        <div class="card-pills">
+          <span class="card-pill">Interactivo</span>
+          <span class="card-pill">15 preguntas</span>
+          <span class="card-pill">Resultado automático</span>
+        </div>
+        <div class="card-cta">Hacer la auditoría →</div>
+      </div>
+    </a>
+
+    <a href="psicologia-del-color.html" class="resource-card">
+      <div class="card-visual" style="background: linear-gradient(135deg, #7D3C98 0%, #C0392B 50%, #E67E22 100%);">
+        <div class="card-visual-icon">◉</div>
+        <div class="card-visual-title">El poder oculto del color en tu marca</div>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Guía de Psicología del Color</div>
+        <div class="card-desc">9 colores con su psicología completa, teoría de combinaciones, paletas de ejemplo por tipo de negocio y reglas de oro del color en branding.</div>
+        <div class="card-pills">
+          <span class="card-pill">Guía visual</span>
+          <span class="card-pill">9 colores</span>
+          <span class="card-pill">Paletas de ejemplo</span>
+        </div>
+        <div class="card-cta">Ver la guía →</div>
+      </div>
+    </a>
+
+    <a href="fuentes-gratuitas.html" class="resource-card">
+      <div class="card-visual" style="background: linear-gradient(135deg, #1A1A18 0%, #2C3E50 100%);">
+        <div class="card-visual-icon" style="font-family:'Playfair Display',serif; font-size:3.5rem; font-style:italic; color:white; opacity:0.9;">Aa</div>
+        <div class="card-visual-title">Fuentes gratuitas que parecen un lujo</div>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Juradería de Fuentes Gratuitas</div>
+        <div class="card-desc">25 tipografías de Google Fonts curadas a mano. Con links directos, previews en vivo, categorías y combinaciones que funcionan.</div>
+        <div class="card-pills">
+          <span class="card-pill">25 fuentes</span>
+          <span class="card-pill">Links directos</span>
+          <span class="card-pill">Combinaciones</span>
+        </div>
+        <div class="card-cta">Ver las fuentes →</div>
+      </div>
+    </a>
+
+    <a href="kit-hooks-reels.html" class="resource-card">
+      <div class="card-visual" style="background: linear-gradient(135deg, #C0392B 0%, #7D3C98 100%);">
+        <div class="card-visual-icon">▶</div>
+        <div class="card-visual-title">Kit de ganchos visuales para Reels</div>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Kit de Hooks para Reels</div>
+        <div class="card-desc">10 ganchos visuales de alto impacto con copy listo, variantes, tips de diseño en Canva y la fórmula completa para que el algoritmo te quiera.</div>
+        <div class="card-pills">
+          <span class="card-pill">10 hooks</span>
+          <span class="card-pill">Tips Canva</span>
+          <span class="card-pill">Copy listo</span>
+        </div>
+        <div class="card-cta">Ver el kit →</div>
+      </div>
+    </a>
+
+    <div class="resource-card coming" style="position:relative">
+      <div class="card-visual" style="background: linear-gradient(135deg, #2C3E50 0%, #4A7C59 100%); position:relative;">
+        <div class="coming-badge">Próximamente</div>
+        <div class="card-visual-icon">🖼</div>
+        <div class="card-visual-title">Pack de wallpapers Batifondo</div>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Pack de Wallpapers</div>
+        <div class="card-desc">Fondos de pantalla tipográficos y motivadores para teléfono y computadora. Estética Batifondo: hard work &amp; stay creative.</div>
+        <div class="card-pills">
+          <span class="card-pill">Teléfono</span>
+          <span class="card-pill">Computadora</span>
+          <span class="card-pill">Descarga directa</span>
+        </div>
+        <div class="card-cta">Muy pronto →</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="tip-box">
+    <h2>¿Cómo usar estos recursos?</h2>
+    <ul class="tip-list">
+      <li>Empezá por la <strong>Auditoría de Marca</strong>: te va a dar un diagnóstico honesto de dónde estás parada hoy.</li>
+      <li>Usá la <strong>Guía de Psicología del Color</strong> para revisar si tu paleta actual realmente comunica lo que querés.</li>
+      <li>Visitá la <strong>Juradería de Fuentes</strong> cuando necesites renovar o definir tu tipografía de marca sin gastar nada.</li>
+      <li>Aplicá el <strong>Kit de Hooks</strong> la próxima vez que vayas a filmar un Reel: elegí uno, adaptá el texto y diseñalo en Canva en 10 minutos.</li>
+      <li>Todos los recursos son gratuitos y podés compartirlos con quien los necesite.</li>
+    </ul>
+  </div>
+
+</div>
+
+<div class="footer">
+  <h2>¿Lista para construir una marca<br>que trabaje por <em>vos</em>?</h2>
+  <p>Estos recursos son el punto de partida. Si querés ir más lejos, en Batifondo diseñamos identidades visuales completas con estrategia real.</p>
+  <a href="#" class="footer-btn">Hablemos →</a>
+  <div class="footer-copy">© Batifondo · Todos los derechos reservados</div>
+</div>
+
+</body>
+</html>
