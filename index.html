@@ -356,6 +356,35 @@
       .hero-btns{flex-direction:column}
       .email-form{flex-direction:column}
     }
+
+    /* ── INSTAGRAM SECTION ── */
+    #instagram{background:var(--dark);padding:5rem 2rem 4rem;overflow:hidden}
+    .insta-inner{max-width:1100px;margin:0 auto}
+    .insta-header{display:flex;align-items:flex-end;justify-content:space-between;
+      flex-wrap:wrap;gap:1.5rem;margin-bottom:2.5rem}
+    .insta-title{font-family:'Calistoga',serif;font-weight:400;
+      font-size:clamp(1.8rem,3.5vw,2.8rem);color:var(--white);line-height:1.1}
+    .insta-title em{font-style:normal;color:var(--lime)}
+    .insta-handle{font-family:'Barlow Condensed',sans-serif;font-weight:700;
+      font-size:.72rem;letter-spacing:3px;text-transform:uppercase;
+      color:var(--hot-pink);margin-bottom:.6rem}
+    .insta-follow-btn{font-family:'Poppins',sans-serif;font-weight:700;
+      font-size:.82rem;letter-spacing:2px;text-transform:uppercase;
+      background:var(--hot-pink);color:#fff;padding:13px 26px;
+      text-decoration:none;border:3px solid var(--hot-pink);
+      box-shadow:4px 4px 0 0 rgba(255,255,255,.12);
+      transition:transform .12s,box-shadow .12s;white-space:nowrap;flex-shrink:0}
+    .insta-follow-btn:hover{transform:translate(-2px,-2px);
+      box-shadow:6px 6px 0 0 rgba(255,255,255,.12)}
+    behold-widget{--behold-border-radius:0 !important;display:block;width:100%}
+    .insta-placeholder{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px}
+    .insta-placeholder::-webkit-scrollbar{height:3px}
+    .insta-placeholder::-webkit-scrollbar-track{background:rgba(255,255,255,.06)}
+    .insta-placeholder::-webkit-scrollbar-thumb{background:var(--lime)}
+    .insta-tile{flex-shrink:0;width:180px;aspect-ratio:1;
+      background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.08);
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.8rem;color:rgba(255,255,255,.12)}
   </style>
 </head>
 <body>
@@ -557,6 +586,41 @@
     </div>
   </div>
 </section>
+<!-- INSTAGRAM -->
+<section id="instagram">
+  <div class="insta-inner">
+    <div class="insta-header">
+      <div>
+        <div class="insta-handle">@batifondo.design</div>
+        <div class="insta-title">Seguime en<br><em>Instagram</em></div>
+      </div>
+      <a href="https://www.instagram.com/batifondo.design/" target="_blank"
+         class="insta-follow-btn">Seguir en Instagram →</a>
+    </div>
+
+    <!-- ─────────────────────────────────────────────────────────────
+         BEHOLD WIDGET — feed de Instagram en tiempo real
+         Pasos para activarlo:
+           1. Creá una cuenta gratis en https://behold.so
+           2. Conectá tu cuenta de Instagram @batifondo.design
+           3. Creá un widget (Layout: Row ó Grid)
+           4. Copiá tu Feed ID y reemplazá YOUR_FEED_ID abajo
+    ────────────────────────────────────────────────────────────── -->
+    <script src="https://w.behold.so/widget.js" type="module"></script>
+    <behold-widget feed-id="YOUR_FEED_ID"></behold-widget>
+
+    <!-- Placeholder visual — se oculta automáticamente cuando el widget carga -->
+    <div class="insta-placeholder" id="instaTiles">
+      <div class="insta-tile">◻</div>
+      <div class="insta-tile">◻</div>
+      <div class="insta-tile">◻</div>
+      <div class="insta-tile">◻</div>
+      <div class="insta-tile">◻</div>
+      <div class="insta-tile">◻</div>
+    </div>
+  </div>
+</section>
+
 <section id="recursos">
   <div style="max-width:1100px;margin:0 auto">
     <div class="section-label" style="color:var(--blue)">Para vos, gratis</div>
@@ -900,6 +964,13 @@
 <div class="toast" id="toast">¡Mensaje enviado! Te respondo pronto.</div>
 
 <script>
+  
+  // Hide Instagram placeholder when Behold widget loads
+  document.querySelector('behold-widget')?.addEventListener('load', () => {
+    const ph = document.getElementById('instaTiles');
+    if (ph) ph.style.display = 'none';
+  });
+
   // Hamburger
   const burger = document.getElementById('burger');
   const navLinks = document.getElementById('nav-links');
