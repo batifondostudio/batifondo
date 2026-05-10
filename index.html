@@ -174,8 +174,12 @@
     .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;
       max-width:1100px;margin:0 auto}
     .plan-card{background:var(--white);display:flex;flex-direction:column;
-      position:relative;overflow:hidden}
-    .plan-card.featured{transform:scale(1.04);box-shadow:0 24px 60px rgba(0,0,0,.3)}
+      position:relative;overflow:hidden;
+      box-shadow:6px 6px 0 0 #1e2a6e;
+      transition:transform .15s,box-shadow .15s}
+    .plan-card:hover{transform:translate(-3px,-3px);box-shadow:9px 9px 0 0 #1e2a6e}
+    .plan-card.featured{transform:scale(1.04);box-shadow:6px 6px 0 0 #1e2a6e}
+    .plan-card.featured:hover{transform:scale(1.04) translate(-3px,-3px);box-shadow:9px 9px 0 0 #1e2a6e}
     .plan-top{background:var(--hot-pink);padding:2rem 1.5rem 1.5rem;color:var(--white)}
     .plan-card.featured .plan-top{background:var(--blue)}
 
@@ -338,6 +342,7 @@
       .recursos-inner{grid-template-columns:1fr}
       .plans{grid-template-columns:1fr;max-width:420px;margin:0 auto}
       .plan-card.featured{transform:none}
+      .plan-card.featured:hover{transform:translate(-3px,-3px)}
       .testimonios-grid{grid-template-columns:1fr}
       .sobre-inner{grid-template-columns:1fr}
       .contacto-inner{grid-template-columns:1fr}
