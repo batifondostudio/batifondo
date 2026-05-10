@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calculadora de Presupuestos — Batifondo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Calistoga&family=Nunito:wght@400;600;700;800&family=Poppins:wght@700&family=Rock+Salt&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --lime:#c8e000;--blue:#4d6af5;--hot-pink:#ec4899;
+      --purple:#5569f5;--dark:#1e2a6e;--white:#fff;
+    }
+    body{font-family:'Nunito',sans-serif;background:var(--white);color:var(--dark);overflow-x:hidden}
+
+    /* COVER */
+    .cover{background:var(--lime);padding:3.5rem 2rem 3rem;text-align:center;position:relative;overflow:hidden}
+    .cover::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:8px;background:repeating-linear-gradient(90deg,var(--dark) 0,var(--dark) 18px,transparent 18px,transparent 24px)}
+    .cover-label{font-family:'Rock Salt',cursive;font-size:.7rem;color:var(--blue);letter-spacing:2px;margin-bottom:1.2rem}
+    .cover h1{font-family:'Calistoga',serif;font-weight:400;font-size:clamp(2rem,5vw,3.4rem);color:var(--dark);line-height:1.1;margin-bottom:1rem}
+    .cover h1 em{font-style:normal;color:var(--blue)}
+    .cover-sub{font-size:1.05rem;color:var(--dark);opacity:.8;max-width:520px;margin:0 auto 1.5rem;line-height:1.6}
+    .cover-tags{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center}
+    .tag{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;border:2px solid var(--dark);padding:4px 12px;color:var(--dark)}
+
+    /* MAIN */
+    main{max-width:780px;margin:0 auto;padding:3rem 1.5rem 5rem}
+
+    /* SECTION LABELS */
+    .section-num{font-family:'Rock Salt',cursive;font-size:.65rem;color:var(--hot-pink);letter-spacing:2px;margin-bottom:.4rem}
+    .section-h{font-family:'Calistoga',serif;font-weight:400;font-size:1.9rem;color:var(--dark);margin-bottom:.3rem}
+    .section-desc{font-size:.95rem;color:var(--dark);opacity:.7;margin-bottom:2rem;line-height:1.6}
+
+    /* CARD */
+    .calc-card{border:3px solid var(--dark);padding:2rem;margin-bottom:3.5rem;position:relative}
+    .calc-card::before{content:'';position:absolute;top:6px;left:6px;right:-6px;bottom:-6px;background:var(--dark);z-index:-1}
+
+    /* INPUTS */
+    .field{margin-bottom:1.4rem}
+    .field label{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:.4rem}
+    .field input[type="number"],
+    .field select{width:100%;border:2px solid var(--dark);padding:12px 14px;font-family:'Nunito',sans-serif;font-size:1rem;color:var(--dark);background:var(--white);outline:none;appearance:none;-webkit-appearance:none}
+    .field input[type="number"]:focus,
+    .field select:focus{border-color:var(--blue)}
+    .field .hint{font-size:.8rem;color:var(--dark);opacity:.55;margin-top:.3rem}
+
+    /* SELECT CUSTOM */
+    .select-wrap{position:relative}
+    .select-wrap::after{content:'▾';position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:1rem;color:var(--dark);pointer-events:none}
+
+    /* TOGGLE */
+    .toggle-row{display:flex;align-items:center;gap:1rem;margin-bottom:1.4rem}
+    .toggle-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--blue)}
+    .toggle{position:relative;width:48px;height:26px;cursor:pointer}
+    .toggle input{opacity:0;width:0;height:0}
+    .toggle-track{position:absolute;inset:0;background:#ddd;border:2px solid var(--dark);transition:.2s}
+    .toggle input:checked + .toggle-track{background:var(--hot-pink)}
+    .toggle-thumb{position:absolute;top:2px;left:2px;width:18px;height:18px;background:var(--dark);transition:.2s}
+    .toggle input:checked ~ .toggle-thumb{left:26px;background:var(--white)}
+    .rush-badge{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;background:var(--hot-pink);color:var(--white);padding:3px 10px;opacity:0;transition:.2s}
+    .rush-badge.active{opacity:1}
+
+    /* RESULT BOX */
+    .result{background:var(--dark);color:var(--white);padding:1.8rem;margin-top:1.8rem}
+    .result-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.7rem;letter-spacing:3px;text-transform:uppercase;opacity:.6;margin-bottom:.4rem}
+    .result-main{font-family:'Calistoga',serif;font-weight:400;font-size:2.6rem;color:var(--lime);line-height:1}
+    .result-sub{font-size:.85rem;opacity:.65;margin-top:.5rem}
+    .result-breakdown{margin-top:1.2rem;border-top:1px solid rgba(255,255,255,.15);padding-top:1rem;display:flex;flex-direction:column;gap:.35rem}
+    .breakdown-row{display:flex;justify-content:space-between;font-size:.88rem}
+    .breakdown-row .bk-label{opacity:.65}
+    .breakdown-row .bk-val{font-weight:700;color:var(--lime)}
+    .breakdown-row.total-row{border-top:1px solid rgba(255,255,255,.2);margin-top:.3rem;padding-top:.6rem;font-size:1rem}
+    .breakdown-row.total-row .bk-val{font-size:1.2rem;color:var(--hot-pink)}
+
+    /* DIVIDER */
+    .divider{border:none;border-top:3px solid var(--lime);margin:1rem 0 2rem}
+
+    /* CTA STRIP */
+    .cta-strip{background:var(--blue);padding:2.5rem 2rem;text-align:center;border:3px solid var(--dark);position:relative}
+    .cta-strip::before{content:'';position:absolute;top:6px;left:6px;right:-6px;bottom:-6px;background:var(--dark);z-index:-1}
+    .cta-strip .cta-label{font-family:'Rock Salt',cursive;font-size:.65rem;color:var(--lime);letter-spacing:2px;margin-bottom:.8rem}
+    .cta-strip h2{font-family:'Calistoga',serif;font-weight:400;font-size:1.7rem;color:var(--white);margin-bottom:.6rem;line-height:1.2}
+    .cta-strip p{color:rgba(255,255,255,.75);font-size:.95rem;margin-bottom:1.5rem;line-height:1.5}
+    .email-form{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;max-width:480px;margin:0 auto}
+    .email-form input[type="email"]{flex:1;min-width:220px;border:3px solid var(--lime);padding:13px 16px;font-family:'Nunito',sans-serif;font-size:1rem;background:rgba(255,255,255,.1);color:var(--white);outline:none}
+    .email-form input[type="email"]::placeholder{color:rgba(255,255,255,.45)}
+    .email-form input[type="email"]:focus{background:rgba(255,255,255,.18)}
+    .btn-cta{font-family:'Poppins',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:1px;text-transform:uppercase;background:var(--lime);color:var(--dark);border:3px solid var(--dark);padding:13px 22px;cursor:pointer;white-space:nowrap;transition:background .15s}
+    .btn-cta:hover{background:var(--white)}
+    .form-legal{font-size:.75rem;color:rgba(255,255,255,.4);margin-top:.8rem}
+    .toast{display:none;background:var(--lime);color:var(--dark);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:1px;text-transform:uppercase;padding:10px 20px;margin-top:1rem;text-align:center}
+    .toast.show{display:block}
+
+    /* TIPS */
+    .tips{margin-top:3.5rem}
+    .tips-label{font-family:'Rock Salt',cursive;font-size:.65rem;color:var(--purple);letter-spacing:2px;margin-bottom:1.2rem}
+    .tip-list{display:flex;flex-direction:column;gap:.8rem}
+    .tip{display:flex;gap:1rem;align-items:flex-start;border-left:4px solid var(--lime);padding-left:1rem}
+    .tip-icon{font-size:1.2rem;flex-shrink:0;margin-top:2px}
+    .tip-text{font-size:.92rem;line-height:1.5;color:var(--dark);opacity:.85}
+    .tip-text strong{color:var(--blue)}
+
+    /* FOOTER */
+    footer{background:var(--dark);color:rgba(255,255,255,.5);text-align:center;padding:1.5rem;font-size:.8rem;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;text-transform:uppercase}
+    footer a{color:var(--lime);text-decoration:none}
+
+    @media(max-width:600px){
+      .calc-card{padding:1.4rem}
+      .cover{padding:2.5rem 1.2rem 2.2rem}
+      .result-main{font-size:2rem}
+    }
+  </style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-label">Herramienta gratuita · Batifondo</div>
+  <h1>Calculadora de<br><em>presupuestos</em><br>para diseñadoras freelance</h1>
+  <p class="cover-sub">Calculá tu tarifa mínima por hora y armá presupuestos de proyectos en segundos. Sin Excel, sin adivinar.</p>
+  <div class="cover-tags">
+    <span class="tag">Tarifa por hora</span>
+    <span class="tag">Presupuesto por proyecto</span>
+    <span class="tag">100% gratis</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- SECCIÓN 1: TARIFA POR HORA -->
+  <div class="section-num">Parte 01</div>
+  <div class="section-h">Tarifa mínima por hora</div>
+  <p class="section-desc">Calculá cuánto necesitás cobrar por hora para cubrir tus gastos y llegar a tus ingresos objetivo. Este número es tu piso — cobrar menos que esto significa trabajar a pérdida.</p>
+
+  <div class="calc-card">
+    <div class="field">
+      <label>Ingreso neto mensual deseado (€)</label>
+      <input type="number" id="income" value="2000" min="0" oninput="calcHourly()"/>
+      <p class="hint">Lo que querés llevarte a casa después de impuestos y gastos</p>
+    </div>
+    <div class="field">
+      <label>Horas de trabajo por semana</label>
+      <input type="number" id="hoursWeek" value="40" min="1" max="80" oninput="calcHourly()"/>
+      <p class="hint">Incluye solo horas facturables (no reuniones, admin, marketing propio)</p>
+    </div>
+    <div class="field">
+      <label>Semanas de vacaciones al año</label>
+      <input type="number" id="vacWeeks" value="4" min="0" max="20" oninput="calcHourly()"/>
+    </div>
+    <div class="field">
+      <label>Gastos fijos mensuales (€)</label>
+      <input type="number" id="overhead" value="300" min="0" oninput="calcHourly()"/>
+      <p class="hint">Software, internet, hardware, espacio de trabajo, seguros, etc.</p>
+    </div>
+
+    <div class="result">
+      <div class="result-label">Tu tarifa mínima por hora</div>
+      <div class="result-main" id="hourlyRate">€ 0</div>
+      <div class="result-sub" id="hourlyContext">—</div>
+      <div class="result-breakdown">
+        <div class="breakdown-row">
+          <span class="bk-label">Horas facturables/año</span>
+          <span class="bk-val" id="bk-hours">—</span>
+        </div>
+        <div class="breakdown-row">
+          <span class="bk-label">Horas facturables/mes</span>
+          <span class="bk-val" id="bk-hoursMonth">—</span>
+        </div>
+        <div class="breakdown-row">
+          <span class="bk-label">Necesitás cubrir al mes</span>
+          <span class="bk-val" id="bk-need">—</span>
+        </div>
+        <div class="breakdown-row total-row">
+          <span class="bk-label">Tarifa mínima</span>
+          <span class="bk-val" id="bk-rate">—</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- SECCIÓN 2: PRESUPUESTO DE PROYECTO -->
+  <div class="section-num">Parte 02</div>
+  <div class="section-h">Presupuesto por proyecto</div>
+  <p class="section-desc">Con tu tarifa calculada (o la que ya usás), armá presupuestos detallados al instante. Incluye margen por urgencia, revisiones y tipo de proyecto.</p>
+
+  <div class="calc-card">
+    <div class="field">
+      <label>Tu tarifa por hora (€)</label>
+      <input type="number" id="myRate" value="50" min="1" oninput="calcProject()"/>
+      <p class="hint">Usá la tarifa calculada arriba o la que ya estás cobrando</p>
+    </div>
+
+    <div class="field">
+      <label>Tipo de proyecto</label>
+      <div class="select-wrap">
+        <select id="projectType" onchange="calcProject()">
+          <option value="branding" data-base="20">Identidad / Branding completo</option>
+          <option value="redes" data-base="8">Redes sociales (pack mensual)</option>
+          <option value="marketing" data-base="6">Materiales de marketing (flyers, banners)</option>
+          <option value="soporte" data-base="4">Soporte de marca (piezas sueltas)</option>
+          <option value="otro" data-base="0">Otro</option>
+        </select>
+      </div>
+      <p class="hint" id="typeHint">Estimado: 20–40 hs para un proyecto de branding completo</p>
+    </div>
+
+    <div class="field">
+      <label>Horas estimadas del proyecto</label>
+      <input type="number" id="projHours" value="20" min="1" oninput="calcProject()"/>
+    </div>
+
+    <div class="field">
+      <label>Revisiones incluidas</label>
+      <input type="number" id="revisions" value="2" min="0" max="10" oninput="calcProject()"/>
+      <p class="hint">Cada revisión extra = 1 hs adicional de trabajo estimada</p>
+    </div>
+
+    <div class="toggle-row">
+      <span class="toggle-label">Urgencia / Rush</span>
+      <label class="toggle">
+        <input type="checkbox" id="rushToggle" onchange="calcProject()"/>
+        <div class="toggle-track"></div>
+        <div class="toggle-thumb"></div>
+      </label>
+      <span class="rush-badge" id="rushBadge">+50% urgencia</span>
+    </div>
+
+    <div class="result">
+      <div class="result-label">Presupuesto sugerido</div>
+      <div class="result-main" id="projTotal">€ 0</div>
+      <div class="result-sub" id="projContext">—</div>
+      <div class="result-breakdown">
+        <div class="breakdown-row">
+          <span class="bk-label">Horas base del proyecto</span>
+          <span class="bk-val" id="bk-baseHours">—</span>
+        </div>
+        <div class="breakdown-row">
+          <span class="bk-label">Horas por revisiones</span>
+          <span class="bk-val" id="bk-revHours">—</span>
+        </div>
+        <div class="breakdown-row">
+          <span class="bk-label">Total de horas</span>
+          <span class="bk-val" id="bk-totalHours">—</span>
+        </div>
+        <div class="breakdown-row">
+          <span class="bk-label">Costo base (horas × tarifa)</span>
+          <span class="bk-val" id="bk-baseCost">—</span>
+        </div>
+        <div class="breakdown-row" id="rushRow" style="display:none">
+          <span class="bk-label">Recargo por urgencia (+50%)</span>
+          <span class="bk-val" id="bk-rush" style="color:var(--hot-pink)">—</span>
+        </div>
+        <div class="breakdown-row total-row">
+          <span class="bk-label">Presupuesto total</span>
+          <span class="bk-val" id="bk-total">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RANGO CONTEXTUAL -->
+    <div id="marketRange" style="margin-top:1.2rem;padding:1rem;background:rgba(200,224,0,.12);border:2px solid var(--lime);display:none">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--dark);margin-bottom:.4rem">Referencia de mercado</div>
+      <div id="marketRangeText" style="font-size:.88rem;line-height:1.5;color:var(--dark);opacity:.8"></div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-strip">
+    <div class="cta-label">Plantilla editable · PDF + Excel</div>
+    <h2>Llevate la planilla de presupuesto lista para usar</h2>
+    <p>Completá tu mail y te mando la plantilla editable para armar presupuestos profesionales con logo, desglose y condiciones incluidas.</p>
+    <form class="email-form" onsubmit="handleSubmit(event)">
+      <input type="email" id="emailInput" placeholder="tu@email.com" required/>
+      <button type="submit" class="btn-cta">Quiero la plantilla →</button>
+    </form>
+    <p class="form-legal">Sin spam. Podés darte de baja en cualquier momento.</p>
+    <div class="toast" id="toast">¡Listo! Revisá tu casilla de correo 📬</div>
+  </div>
+
+  <!-- TIPS -->
+  <div class="tips">
+    <div class="tips-label">Tips para cobrar mejor</div>
+    <div class="tip-list">
+      <div class="tip">
+        <span class="tip-icon">💡</span>
+        <span class="tip-text"><strong>Tu tarifa mínima es eso: mínima.</strong> Si el proyecto te aporta portfolio, aprendizaje o un cliente estratégico, podés bajarla. Si no, no.</span>
+      </div>
+      <div class="tip">
+        <span class="tip-icon">📋</span>
+        <span class="tip-text"><strong>Siempre por escrito.</strong> El presupuesto debe incluir qué está incluido, cuántas revisiones, plazos de entrega y forma de pago. Evitá malentendidos desde el principio.</span>
+      </div>
+      <div class="tip">
+        <span class="tip-icon">⏰</span>
+        <span class="tip-text"><strong>El rush es un servicio premium.</strong> Reorganizar tu agenda, trabajar fuera de horario o priorizar un proyecto tiene un costo real. Cobrarlo no es malo — es profesional.</span>
+      </div>
+      <div class="tip">
+        <span class="tip-icon">🔄</span>
+        <span class="tip-text"><strong>Limitá las revisiones en el contrato.</strong> "Revisiones ilimitadas" es la forma más rápida de perder dinero en diseño freelance. Establecé cuántas incluís y cuánto cuesta cada adicional.</span>
+      </div>
+      <div class="tip">
+        <span class="tip-icon">📈</span>
+        <span class="tip-text"><strong>Revisá tu tarifa cada 6 meses.</strong> Tu experiencia crece, tus costos cambian, el mercado se mueve. Si llevás más de un año sin subir tu tarifa, probablemente ya quedó desactualizada.</span>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Hecho con ❤️ por <a href="https://batifondostudio.github.io/batifondo/" target="_blank">Batifondo</a> · Diseño gráfico freelance para marcas con personalidad
+</footer>
+
+<script>
+  const fmt = n => '€ ' + Math.round(n).toLocaleString('es-ES');
+
+  // ── TARIFA POR HORA ──────────────────────────────────────────────────────
+  function calcHourly() {
+    const income   = parseFloat(document.getElementById('income').value)    || 0;
+    const hwk      = parseFloat(document.getElementById('hoursWeek').value) || 1;
+    const vacWks   = parseFloat(document.getElementById('vacWeeks').value)  || 0;
+    const overhead = parseFloat(document.getElementById('overhead').value)  || 0;
+
+    const workWeeks    = 52 - vacWks;
+    const hoursYear    = hwk * workWeeks;
+    const hoursMonth   = hoursYear / 12;
+    const monthlyNeed  = income + overhead;
+    const rate         = hoursMonth > 0 ? monthlyNeed / hoursMonth : 0;
+
+    document.getElementById('hourlyRate').textContent = fmt(rate);
+    document.getElementById('bk-hours').textContent   = Math.round(hoursYear) + ' hs';
+    document.getElementById('bk-hoursMonth').textContent = Math.round(hoursMonth) + ' hs';
+    document.getElementById('bk-need').textContent    = fmt(monthlyNeed);
+    document.getElementById('bk-rate').textContent    = fmt(rate) + '/hora';
+
+    let ctx = '';
+    if (rate < 20)      ctx = '⚠️  Muy baja para el mercado — revisá tus números';
+    else if (rate < 40) ctx = 'Tarifa de entrada. Viable para empezar, con margen para crecer.';
+    else if (rate < 70) ctx = 'Tarifa competitiva para diseñadoras con experiencia.';
+    else if (rate < 120) ctx = 'Tarifa senior. Respaldada por experiencia y portfolio sólido.';
+    else                ctx = 'Tarifa especialista / estudio boutique.';
+    document.getElementById('hourlyContext').textContent = ctx;
+
+    // Auto-fill project rate
+    if (rate > 0) document.getElementById('myRate').value = Math.round(rate);
+    calcProject();
+  }
+
+  // ── PRESUPUESTO DE PROYECTO ──────────────────────────────────────────────
+  const hints = {
+    branding:   'Estimado: 20–40 hs para un proyecto de branding completo',
+    redes:      'Estimado: 8–15 hs para un pack de redes mensual',
+    marketing:  'Estimado: 4–10 hs según cantidad de piezas',
+    soporte:    'Estimado: 2–6 hs para piezas sueltas o adaptaciones',
+    otro:       'Ingresá las horas que estimás para tu proyecto'
+  };
+
+  const marketRanges = {
+    branding:   'Branding completo (logo + manual): <strong>€ 800 – € 3.500</strong> según experiencia y alcance.',
+    redes:      'Pack de redes mensual: <strong>€ 200 – € 800</strong> según cantidad de piezas y plataformas.',
+    marketing:  'Materiales de marketing: <strong>€ 80 – € 500</strong> por pack según complejidad.',
+    soporte:    'Soporte de marca / piezas sueltas: <strong>€ 50 – € 300</strong> por pieza.',
+    otro:       ''
+  };
+
+  function calcProject() {
+    const rate     = parseFloat(document.getElementById('myRate').value)     || 0;
+    const hours    = parseFloat(document.getElementById('projHours').value)  || 0;
+    const revs     = parseFloat(document.getElementById('revisions').value)  || 0;
+    const rush     = document.getElementById('rushToggle').checked;
+    const type     = document.getElementById('projectType').value;
+
+    document.getElementById('typeHint').textContent = hints[type] || '';
+
+    const revHours  = revs * 1;
+    const totalHrs  = hours + revHours;
+    const baseCost  = totalHrs * rate;
+    const rushCost  = rush ? baseCost * 0.5 : 0;
+    const total     = baseCost + rushCost;
+
+    document.getElementById('projTotal').textContent     = fmt(total);
+    document.getElementById('bk-baseHours').textContent  = hours + ' hs';
+    document.getElementById('bk-revHours').textContent   = revHours + ' hs';
+    document.getElementById('bk-totalHours').textContent = totalHrs + ' hs';
+    document.getElementById('bk-baseCost').textContent   = fmt(baseCost);
+    document.getElementById('bk-total').textContent      = fmt(total);
+
+    const rushRow = document.getElementById('rushRow');
+    if (rush) {
+      rushRow.style.display = 'flex';
+      document.getElementById('bk-rush').textContent = '+' + fmt(rushCost);
+    } else {
+      rushRow.style.display = 'none';
+    }
+
+    document.getElementById('rushBadge').classList.toggle('active', rush);
+
+    let ctx = '';
+    if (total === 0) ctx = 'Completá los datos para ver el presupuesto';
+    else ctx = `${totalHrs} hs totales · ${fmt(rate)}/hora · ${rush ? 'con recargo rush' : 'sin recargo'}`;
+    document.getElementById('projContext').textContent = ctx;
+
+    // Market range
+    const mrDiv  = document.getElementById('marketRange');
+    const mrText = document.getElementById('marketRangeText');
+    if (marketRanges[type]) {
+      mrDiv.style.display = 'block';
+      mrText.innerHTML    = marketRanges[type];
+    } else {
+      mrDiv.style.display = 'none';
+    }
+  }
+
+  // ── EMAIL FORM ────────────────────────────────────────────────────────────
+  function handleSubmit(e) {
+    e.preventDefault();
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    document.getElementById('emailInput').value = '';
+    setTimeout(() => toast.classList.remove('show'), 4000);
+  }
+
+  // Init
+  calcHourly();
+</script>
+</body>
+</html>
