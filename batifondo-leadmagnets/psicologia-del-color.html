@@ -140,12 +140,17 @@
     }
 
     .color-card {
-      border-radius: 16px;
       overflow: hidden;
       background: var(--white);
-      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+      border: 3px solid var(--dark);
+      box-shadow: 6px 6px 0 0 var(--dark);
       display: grid;
       grid-template-columns: 120px 1fr;
+      transition: transform .15s, box-shadow .15s;
+    }
+    .color-card:hover {
+      transform: translate(-3px,-3px);
+      box-shadow: 9px 9px 0 0 var(--dark);
     }
 
     .color-swatch {
@@ -166,7 +171,7 @@
       text-align: center;
     }
 
-    .color-body { padding: 1.5rem 1.5rem 1.5rem 0; }
+    .color-body { padding: 1.5rem 1.5rem 1.5rem 1.2rem; }
     .color-headline {
       font-family: 'Calistoga', serif;
       font-size: 1.3rem;
