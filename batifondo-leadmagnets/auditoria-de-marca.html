@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#c8e000" />
   <title>Auditoría de Marca en 15 Minutos · Batifondo</title>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Calistoga&family=Nunito:wght@400;700&family=Poppins:wght@700&family=Rock+Salt&display=swap" rel="stylesheet" />
   <style>
@@ -12,14 +13,10 @@
       --lime: #c8e000;
       --blue: #4d6af5;
       --hot-pink: #ec4899;
-      --purple: #5569f5;
       --dark: #1e2a6e;
       --white: #fff;
-      --mid: #555;
-      --cream: #fff;
-      --sand: rgba(77,106,245,0.15);
-      --accent: #c8e000;
-      --accent-light: #c8e000;
+      --mid: #6b7280;
+      --sand: rgba(77,106,245,0.12);
       --red: #C0392B;
       --green: #27AE60;
       --orange: #E67E22;
@@ -27,34 +24,35 @@
 
     body {
       font-family: 'Nunito', sans-serif;
-      background: var(--white);
+      background: #f8f9ff;
       color: var(--dark);
       min-height: 100vh;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    /* HEADER */
+    /* ── HEADER ── */
     .header {
       background: var(--lime);
       color: var(--dark);
-      padding: 2.5rem 2rem;
+      padding: 2rem 1.25rem 1.75rem;
       text-align: center;
     }
     .header .brand {
       font-family: 'Barlow Condensed', sans-serif;
       font-weight: 700;
-      font-size: 0.8rem;
+      font-size: 0.72rem;
       letter-spacing: 0.3em;
       text-transform: uppercase;
       color: var(--dark);
-      opacity: 0.7;
-      margin-bottom: 1rem;
+      opacity: 0.6;
+      margin-bottom: 0.85rem;
     }
     .header h1 {
       font-family: 'Calistoga', serif;
-      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-size: clamp(1.75rem, 8vw, 2.8rem);
       font-weight: 400;
       line-height: 1.2;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.65rem;
       color: var(--dark);
     }
     .header h1 em {
@@ -62,73 +60,99 @@
       color: var(--blue);
     }
     .header p {
-      font-size: 1rem;
+      font-size: 0.95rem;
       color: var(--dark);
       opacity: 0.75;
-      max-width: 500px;
+      max-width: 420px;
       margin: 0 auto;
-      line-height: 1.6;
+      line-height: 1.55;
     }
 
-    /* PROGRESS */
+    /* ── PROGRESS (sticky) ── */
     .progress-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 100;
       background: var(--blue);
-      padding: 0 2rem 1.5rem;
+      padding: 0.75rem 1.25rem 0.9rem;
+      box-shadow: 0 2px 12px rgba(77,106,245,0.3);
     }
     .progress-bar-track {
-      background: rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.2);
       border-radius: 100px;
-      height: 4px;
+      height: 5px;
       max-width: 700px;
       margin: 0 auto;
     }
     .progress-bar-fill {
-      background: var(--accent-light);
-      height: 4px;
+      background: var(--lime);
+      height: 5px;
       border-radius: 100px;
       width: 0%;
       transition: width 0.5s ease;
     }
     .progress-label {
       text-align: center;
-      font-size: 0.75rem;
-      color: var(--sand);
-      margin-top: 0.5rem;
-      letter-spacing: 0.1em;
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.85);
+      margin-top: 0.45rem;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+      text-transform: uppercase;
     }
 
-    /* MAIN */
+    /* ── MAIN ── */
     .main {
-      max-width: 720px;
+      max-width: 680px;
       margin: 0 auto;
-      padding: 2rem 1.5rem 4rem;
+      padding: 1.5rem 1rem 5rem;
     }
 
-    /* SECTIONS */
+    /* ── STEP INTRO ── */
+    .step-intro {
+      background: var(--blue);
+      color: var(--white);
+      padding: 1.25rem 1.25rem 1.25rem 1.5rem;
+      margin-bottom: 1.75rem;
+      border-left: 5px solid var(--lime);
+    }
+    .step-intro h2 {
+      font-family: 'Calistoga', serif;
+      font-size: 1.25rem;
+      font-weight: 400;
+      margin-bottom: 0.35rem;
+    }
+    .step-intro p {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.55;
+    }
+
+    /* ── SECTION LABEL ── */
     .section-label {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
       font-family: 'Rock Salt', cursive;
-      font-size: 0.6rem;
+      font-size: 0.55rem;
       color: var(--hot-pink);
       margin-bottom: 1.5rem;
       padding-bottom: 0.5rem;
       border-bottom: 3px solid var(--lime);
       width: 100%;
     }
-    .section-icon { font-size: 1rem; }
+    .section-icon { font-size: 0.9rem; }
 
-    /* QUESTION CARD */
+    /* ── QUESTION CARD ── */
     .question-block {
-      margin-bottom: 2rem;
+      margin-bottom: 1.75rem;
       animation: fadeIn 0.3s ease;
     }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
     .question-text {
-      font-size: 1rem;
-      font-weight: 500;
+      font-size: 0.97rem;
+      font-weight: 700;
       line-height: 1.5;
       margin-bottom: 0.75rem;
       color: var(--dark);
@@ -138,29 +162,33 @@
       background: var(--hot-pink);
       color: var(--white);
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 700;
       padding: 0.15rem 0.5rem;
-      margin-right: 0.5rem;
+      margin-right: 0.4rem;
       letter-spacing: 0.05em;
+      vertical-align: middle;
     }
 
-    .options { display: flex; flex-direction: column; gap: 0.5rem; }
+    .options { display: flex; flex-direction: column; gap: 0.55rem; }
 
     .option-label {
       display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-      padding: 0.85rem 1rem;
-      border: 1.5px solid var(--sand);
-      border-radius: 8px;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 1rem 1.1rem;
+      border: 2px solid rgba(77,106,245,0.18);
+      border-radius: 10px;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: border-color 0.18s, background 0.18s;
       background: var(--white);
       font-size: 0.9rem;
       line-height: 1.4;
+      min-height: 52px;
+      -webkit-user-select: none;
+      user-select: none;
     }
-    .option-label:hover { border-color: var(--blue); background: rgba(77,106,245,0.08); }
+    .option-label:active { background: rgba(77,106,245,0.07); }
     .option-label input[type="radio"] { display: none; }
     .option-label.selected {
       border-color: var(--blue);
@@ -168,89 +196,88 @@
       color: var(--white);
     }
     .option-dot {
-      width: 16px;
-      height: 16px;
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
       border: 2px solid currentColor;
       border-radius: 50%;
-      flex-shrink: 0;
-      margin-top: 1px;
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: border-color 0.18s;
     }
     .option-label.selected .option-dot::after {
       content: '';
-      width: 7px;
-      height: 7px;
+      width: 8px;
+      height: 8px;
       background: var(--white);
       border-radius: 50%;
     }
 
-    /* NAV BUTTONS */
+    /* ── ERROR MESSAGE ── */
+    .error-msg {
+      display: none;
+      background: #fef2f2;
+      border: 1.5px solid #fca5a5;
+      color: #991b1b;
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      font-size: 0.85rem;
+      margin-top: 1.25rem;
+      line-height: 1.5;
+    }
+    .error-msg.visible { display: block; animation: fadeIn 0.25s ease; }
+
+    /* ── NAV BUTTONS ── */
     .nav-buttons {
       display: flex;
-      gap: 1rem;
-      margin-top: 2.5rem;
-      justify-content: flex-end;
+      gap: 0.75rem;
+      margin-top: 2rem;
     }
     .btn {
-      padding: 0.8rem 2rem;
-      border-radius: 6px;
+      flex: 1;
+      padding: 1rem 1.25rem;
       border: none;
       cursor: pointer;
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      transition: all 0.2s;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      transition: background 0.2s, color 0.2s;
+      text-align: center;
+      min-height: 52px;
     }
     .btn-primary {
       background: var(--blue);
       color: var(--white);
-      border-radius: 0;
-      font-family: 'Poppins', sans-serif;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
     }
-    .btn-primary:hover { background: var(--dark); }
+    .btn-primary:active { background: var(--dark); }
     .btn-secondary {
       background: transparent;
       color: var(--dark);
       border: 2px solid var(--dark);
-      border-radius: 0;
-      font-family: 'Poppins', sans-serif;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+      flex: 0 0 auto;
+      padding: 1rem;
     }
-    .btn-secondary:hover { background: var(--dark); color: var(--white); }
-    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-secondary:active { background: var(--dark); color: var(--white); }
 
-    /* STEP INTRO */
-    .step-intro {
-      background: var(--blue);
-      color: var(--white);
-      padding: 2rem;
-      border-radius: 0;
-      margin-bottom: 2rem;
-      border-left: 5px solid var(--lime);
+    /* solo en desktop: hover */
+    @media (hover: hover) {
+      .option-label:hover { border-color: var(--blue); background: rgba(77,106,245,0.07); }
+      .btn-primary:hover { background: var(--dark); }
+      .btn-secondary:hover { background: var(--dark); color: var(--white); }
     }
-    .step-intro h2 {
-      font-family: 'Calistoga', serif;
-      font-size: 1.4rem;
-      font-weight: 400;
-      margin-bottom: 0.5rem;
-    }
-    .step-intro p { font-size: 0.85rem; color: rgba(255,255,255,0.8); line-height: 1.6; }
 
-    /* RESULT */
+    /* ── RESULT ── */
     .result-card { display: none; text-align: center; }
     .result-card.visible { display: block; animation: fadeIn 0.5s ease; }
 
     .score-ring {
-      width: 140px;
-      height: 140px;
+      width: 130px;
+      height: 130px;
       border-radius: 50%;
-      margin: 0 auto 1.5rem;
+      margin: 0 auto 1.25rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -259,32 +286,47 @@
     }
     .score-ring .score-num {
       font-family: 'Calistoga', serif;
-      font-size: 2.5rem;
+      font-size: 2.4rem;
       font-weight: 700;
       line-height: 1;
     }
-    .score-ring .score-max { font-size: 0.75rem; color: var(--mid); }
+    .score-ring .score-max { font-size: 0.72rem; color: var(--mid); }
 
     .result-title {
       font-family: 'Calistoga', serif;
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
+      font-size: 1.75rem;
+      font-weight: 400;
+      margin-bottom: 0.4rem;
     }
     .result-subtitle {
-      font-size: 1rem;
+      font-size: 0.95rem;
       color: var(--mid);
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
       font-style: italic;
+      line-height: 1.5;
     }
+    .level-bar {
+      height: 8px;
+      border-radius: 100px;
+      background: var(--sand);
+      margin: 0 0 1.75rem;
+      overflow: hidden;
+    }
+    .level-bar-fill {
+      height: 100%;
+      border-radius: 100px;
+      transition: width 0.9s ease;
+    }
+
     .result-description {
       background: var(--white);
       border-radius: 12px;
-      padding: 1.5rem;
+      padding: 1.25rem;
       text-align: left;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
       line-height: 1.7;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
+      border: 1.5px solid rgba(77,106,245,0.1);
     }
     .result-description strong { color: var(--dark); }
 
@@ -292,15 +334,15 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1.75rem;
       justify-content: center;
     }
     .tag {
       padding: 0.35rem 0.9rem;
       border-radius: 100px;
       font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
+      font-weight: 700;
+      letter-spacing: 0.04em;
     }
     .tag-warn { background: #FEF3CD; color: #856404; }
     .tag-good { background: #D1F2E1; color: #145A32; }
@@ -309,63 +351,48 @@
     .cta-box {
       background: var(--blue);
       color: var(--white);
-      border-radius: 0;
-      padding: 2rem;
-      margin-top: 2rem;
+      padding: 1.75rem 1.25rem;
+      margin-top: 1.5rem;
     }
     .cta-box h3 {
       font-family: 'Calistoga', serif;
-      font-size: 1.3rem;
-      margin-bottom: 0.75rem;
+      font-size: 1.2rem;
+      font-weight: 400;
+      margin-bottom: 0.65rem;
+      line-height: 1.35;
     }
-    .cta-box p { font-size: 0.85rem; color: rgba(255,255,255,0.8); line-height: 1.6; margin-bottom: 1.25rem; }
-    .cta-box .btn-cta {
+    .cta-box p {
+      font-size: 0.84rem;
+      color: rgba(255,255,255,0.82);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+    .btn-cta {
+      display: block;
       background: var(--lime);
       color: var(--dark);
-      padding: 0.9rem 2rem;
-      border: none;
+      padding: 1rem 1.5rem;
       font-family: 'Poppins', sans-serif;
       font-weight: 700;
       font-size: 0.85rem;
-      cursor: pointer;
-      display: inline-block;
       text-decoration: none;
       text-transform: uppercase;
       letter-spacing: 0.08em;
+      text-align: center;
+      width: 100%;
     }
 
     .repeat-btn {
       background: transparent;
-      border: 1.5px solid var(--sand);
+      border: 1.5px solid rgba(77,106,245,0.25);
       color: var(--mid);
-      padding: 0.7rem 1.5rem;
-      border-radius: 6px;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
       cursor: pointer;
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       margin-top: 1rem;
       font-family: 'Nunito', sans-serif;
-    }
-    .repeat-btn:hover { border-color: var(--dark); color: var(--dark); }
-
-    /* LEVEL indicator */
-    .level-bar {
-      height: 8px;
-      border-radius: 100px;
-      background: var(--sand);
-      margin: 1rem 0 2rem;
-      overflow: hidden;
-    }
-    .level-bar-fill {
-      height: 100%;
-      border-radius: 100px;
-      transition: width 0.8s ease;
-    }
-
-    @media (max-width: 480px) {
-      .header { padding: 1.5rem 1rem; }
-      .main { padding: 1.5rem 1rem 3rem; }
-      .nav-buttons { flex-direction: column; }
-      .btn { width: 100%; text-align: center; }
+      width: 100%;
     }
   </style>
 </head>
@@ -374,18 +401,19 @@
 <div class="header">
   <div class="brand">Batifondo · Herramientas de Marca</div>
   <h1>¿Tu marca se ve <em>profesional</em><br>o amateur?</h1>
-  <p>Auditoría honesta en 15 minutos. Responde 15 preguntas y descubrí qué tan sólida es tu identidad visual.</p>
+  <p>Auditoría honesta en 15 minutos. Respondé las preguntas y descubrí qué tan sólida es tu identidad visual.</p>
 </div>
 
 <div class="progress-wrapper">
   <div class="progress-bar-track">
     <div class="progress-bar-fill" id="progressFill"></div>
   </div>
-  <div class="progress-label" id="progressLabel">Preparando tu auditoría…</div>
+  <div class="progress-label" id="progressLabel">Comenzá la auditoría</div>
 </div>
 
 <div class="main">
-  <!-- ===================== STEP 1: LOGO ===================== -->
+
+  <!-- ── STEP 1: LOGO ── -->
   <div class="quiz-step" id="step-1">
     <div class="step-intro">
       <h2>Bloque 1: Logo</h2>
@@ -429,12 +457,13 @@
       </div>
     </div>
 
+    <div id="error-1" class="error-msg"></div>
     <div class="nav-buttons">
-      <button class="btn btn-primary" onclick="goToStep(2)">Continuar →</button>
+      <button class="btn btn-primary" onclick="goToStep(1, 2)">Continuar →</button>
     </div>
   </div>
 
-  <!-- ===================== STEP 2: TIPOGRAFÍA ===================== -->
+  <!-- ── STEP 2: TIPOGRAFÍA ── -->
   <div class="quiz-step" id="step-2" style="display:none">
     <div class="step-intro">
       <h2>Bloque 2: Tipografía</h2>
@@ -469,13 +498,14 @@
       </div>
     </div>
 
+    <div id="error-2" class="error-msg"></div>
     <div class="nav-buttons">
-      <button class="btn btn-secondary" onclick="goToStep(1)">← Atrás</button>
-      <button class="btn btn-primary" onclick="goToStep(3)">Continuar →</button>
+      <button class="btn btn-secondary" onclick="goBack(1)">←</button>
+      <button class="btn btn-primary" onclick="goToStep(2, 3)">Continuar →</button>
     </div>
   </div>
 
-  <!-- ===================== STEP 3: COLOR ===================== -->
+  <!-- ── STEP 3: COLOR ── -->
   <div class="quiz-step" id="step-3" style="display:none">
     <div class="step-intro">
       <h2>Bloque 3: Color</h2>
@@ -510,13 +540,14 @@
       </div>
     </div>
 
+    <div id="error-3" class="error-msg"></div>
     <div class="nav-buttons">
-      <button class="btn btn-secondary" onclick="goToStep(2)">← Atrás</button>
-      <button class="btn btn-primary" onclick="goToStep(4)">Continuar →</button>
+      <button class="btn btn-secondary" onclick="goBack(2)">←</button>
+      <button class="btn btn-primary" onclick="goToStep(3, 4)">Continuar →</button>
     </div>
   </div>
 
-  <!-- ===================== STEP 4: COMUNICACIÓN ===================== -->
+  <!-- ── STEP 4: COMUNICACIÓN ── -->
   <div class="quiz-step" id="step-4" style="display:none">
     <div class="step-intro">
       <h2>Bloque 4: Comunicación</h2>
@@ -569,13 +600,14 @@
       </div>
     </div>
 
+    <div id="error-4" class="error-msg"></div>
     <div class="nav-buttons">
-      <button class="btn btn-secondary" onclick="goToStep(3)">← Atrás</button>
-      <button class="btn btn-primary" id="finalBtn" onclick="showResult()">Ver mi resultado →</button>
+      <button class="btn btn-secondary" onclick="goBack(3)">←</button>
+      <button class="btn btn-primary" onclick="showResult()">Ver mi resultado →</button>
     </div>
   </div>
 
-  <!-- ===================== RESULT ===================== -->
+  <!-- ── RESULT ── -->
   <div class="result-card" id="result">
     <div class="score-ring" id="scoreRing">
       <div class="score-num" id="scoreNum">—</div>
@@ -590,28 +622,20 @@
     <div class="cta-box">
       <h3>¿Querés una marca que trabaje mientras vos dormís?</h3>
       <p>Trabajemos juntas en construir una identidad visual que te diferencie, te posicione y convierta seguidores en clientes. En Batifondo creamos marcas con estrategia real.</p>
-      <a href="#" class="btn-cta">Quiero saber más →</a>
+      <!-- ✏️ REEMPLAZÁ el href con tu link de Instagram, WhatsApp o formulario -->
+      <a href="https://www.instagram.com/batifondostudio" target="_blank" rel="noopener" class="btn-cta">Quiero trabajar con Batifondo →</a>
     </div>
 
-    <br>
     <button class="repeat-btn" onclick="resetQuiz()">↺ Volver a empezar</button>
   </div>
 
 </div>
 
 <script>
+  const STEP_RANGES = { 1: [1,4], 2: [5,7], 3: [8,10], 4: [11,15] };
   const totalQuestions = 15;
   let answers = {};
-
-  function goToStep(step) {
-    document.querySelectorAll('.quiz-step').forEach(s => s.style.display = 'none');
-    const el = document.getElementById('step-' + step);
-    if (el) {
-      el.style.display = 'block';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-    updateProgress();
-  }
+  let currentStep = 1;
 
   function updateProgress() {
     const answered = Object.keys(answers).length;
@@ -620,91 +644,100 @@
     document.getElementById('progressLabel').textContent =
       answered === 0 ? 'Comenzá la auditoría' :
       answered === totalQuestions ? '¡Listo! Calculando resultado…' :
-      `Pregunta ${answered} de ${totalQuestions} respondida`;
+      `${answered} de ${totalQuestions} preguntas respondidas`;
   }
 
-  // Option click handling
+  function showStep(n) {
+    document.querySelectorAll('.quiz-step').forEach(s => s.style.display = 'none');
+    const el = document.getElementById('step-' + n);
+    if (el) { el.style.display = 'block'; }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    currentStep = n;
+  }
+
+  function getUnansweredInStep(step) {
+    const [from, to] = STEP_RANGES[step];
+    const missing = [];
+    for (let i = from; i <= to; i++) {
+      if (answers['q' + i] === undefined) missing.push(i);
+    }
+    return missing;
+  }
+
+  function goToStep(fromStep, toStep) {
+    const missing = getUnansweredInStep(fromStep);
+    const errEl = document.getElementById('error-' + fromStep);
+    if (missing.length > 0) {
+      errEl.textContent = `Falta responder la pregunta ${missing.map(n => '#' + String(n).padStart(2,'0')).join(', ')}. ¡Completá todas para continuar!`;
+      errEl.classList.add('visible');
+      const firstMissing = document.querySelector(`[data-q="${missing[0]}"]`);
+      if (firstMissing) firstMissing.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    errEl.classList.remove('visible');
+    showStep(toStep);
+  }
+
+  function goBack(toStep) {
+    document.getElementById('error-' + (toStep + 1))?.classList.remove('visible');
+    showStep(toStep);
+  }
+
   document.querySelectorAll('.options').forEach(group => {
     group.querySelectorAll('.option-label').forEach(label => {
       label.addEventListener('click', function () {
         const radio = this.querySelector('input[type="radio"]');
-        const qName = radio.name;
-        answers[qName] = parseInt(radio.value);
+        answers[radio.name] = parseInt(radio.value);
         group.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
         this.classList.add('selected');
         updateProgress();
+        const errEl = document.getElementById('error-' + currentStep);
+        if (errEl) errEl.classList.remove('visible');
       });
     });
   });
 
-  function getScore() {
-    return Object.values(answers).reduce((a, b) => a + b, 0);
-  }
-
   function showResult() {
-    const unanswered = [];
-    for (let i = 1; i <= 15; i++) {
-      if (answers['q' + i] === undefined) unanswered.push(i);
-    }
-    if (unanswered.length > 0) {
-      alert('Falta responder la pregunta ' + unanswered.join(', ') + '. ¡Completá todas para ver tu resultado!');
+    const missing = getUnansweredInStep(4);
+    const errEl = document.getElementById('error-4');
+    if (missing.length > 0) {
+      errEl.textContent = `Falta responder la pregunta ${missing.map(n => '#' + String(n).padStart(2,'0')).join(', ')}. ¡Completá todas para ver tu resultado!`;
+      errEl.classList.add('visible');
+      const firstMissing = document.querySelector(`[data-q="${missing[0]}"]`);
+      if (firstMissing) firstMissing.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
 
-    const score = getScore();
+    const score = Object.values(answers).reduce((a, b) => a + b, 0);
     document.querySelectorAll('.quiz-step').forEach(s => s.style.display = 'none');
     const resultEl = document.getElementById('result');
     resultEl.classList.add('visible');
     window.scrollTo({ top: 0, behavior: 'smooth' });
-
     document.getElementById('scoreNum').textContent = score;
 
-    let title, subtitle, desc, tags, color, barColor, barPct;
+    let title, subtitle, desc, tags, color, barPct;
 
     if (score <= 8) {
       title = 'Marca en construcción';
       subtitle = 'Todavía hay mucho por definir, y está bien. Lo importante es que ya lo sabés.';
-      desc = `<strong>Tu marca todavía no tiene una identidad sólida</strong> y eso puede estar costándote clientes. Sin una base clara de logo, colores, tipografía y comunicación, es difícil que confíen en vos antes de conocerte.<br><br>
-      La buena noticia: esto tiene solución concreta. Con una estrategia de marca bien aplicada podés transformar por completo la percepción que genera tu negocio. <strong>No necesitás más seguidores, necesitás más coherencia.</strong>`;
-      tags = [
-        {text: 'Logo a revisar', type: 'bad'},
-        {text: 'Sin paleta definida', type: 'bad'},
-        {text: 'Comunicación inconsistente', type: 'bad'},
-        {text: 'Gran potencial de mejora', type: 'warn'},
-      ];
+      desc = `<strong>Tu marca todavía no tiene una identidad sólida</strong> y eso puede estar costándote clientes. Sin una base clara de logo, colores, tipografía y comunicación, es difícil que confíen en vos antes de conocerte.<br><br>La buena noticia: esto tiene solución concreta. Con una estrategia de marca bien aplicada podés transformar por completo la percepción que genera tu negocio. <strong>No necesitás más seguidores, necesitás más coherencia.</strong>`;
+      tags = [{text:'Logo a revisar',type:'bad'},{text:'Sin paleta definida',type:'bad'},{text:'Comunicación inconsistente',type:'bad'},{text:'Gran potencial de mejora',type:'warn'}];
       color = 'var(--red)';
-      barColor = 'var(--red)';
-      barPct = Math.round((score / 30) * 100);
     } else if (score <= 18) {
       title = 'Marca en proceso';
       subtitle = 'Tenés bases, pero hay puntos clave que están frenando tu crecimiento.';
-      desc = `<strong>Estás en un punto intermedio muy común</strong>: algo de identidad visual, pero sin la coherencia que convierte una marca en algo memorable y confiable.<br><br>
-      Hay elementos que funcionan bien y otros que te están restando profesionalismo. Identificar esos puntos débiles y corregirlos puede <strong>marcar la diferencia entre que te elijan a vos o a tu competencia</strong>. El trabajo fino es lo que separa lo amateur de lo profesional.`;
-      tags = [
-        {text: 'Base visual existente', type: 'good'},
-        {text: 'Falta coherencia', type: 'warn'},
-        {text: 'Comunicación a pulir', type: 'warn'},
-        {text: 'Potencial sin activar', type: 'warn'},
-      ];
+      desc = `<strong>Estás en un punto intermedio muy común</strong>: algo de identidad visual, pero sin la coherencia que convierte una marca en algo memorable y confiable.<br><br>Identificar esos puntos débiles y corregirlos puede <strong>marcar la diferencia entre que te elijan a vos o a tu competencia</strong>. El trabajo fino es lo que separa lo amateur de lo profesional.`;
+      tags = [{text:'Base visual existente',type:'good'},{text:'Falta coherencia',type:'warn'},{text:'Comunicación a pulir',type:'warn'},{text:'Potencial sin activar',type:'warn'}];
       color = 'var(--orange)';
-      barColor = 'var(--orange)';
-      barPct = Math.round((score / 30) * 100);
     } else {
       title = 'Marca sólida';
       subtitle = 'Tenés una identidad visual bien construida. Ahora es momento de escalarla.';
-      desc = `<strong>¡Felicidades! Tu marca tiene una base sólida</strong> y eso se nota. La coherencia que lograste entre tu identidad visual y tu comunicación genera confianza automáticamente en quien te descubre.<br><br>
-      Ahora la pregunta es: ¿cómo llevás esa solidez al siguiente nivel? Marcas como la tuya están listas para <strong>sistemas de contenido estratégico, kits de marca completos y una presencia que escale sin perder su esencia</strong>.`;
-      tags = [
-        {text: 'Identidad visual sólida', type: 'good'},
-        {text: 'Comunicación coherente', type: 'good'},
-        {text: 'Lista para escalar', type: 'good'},
-        {text: 'Nivel profesional', type: 'good'},
-      ];
+      desc = `<strong>¡Felicidades! Tu marca tiene una base sólida</strong> y eso se nota. La coherencia que lograste entre tu identidad visual y tu comunicación genera confianza automáticamente en quien te descubre.<br><br>Ahora la pregunta es: ¿cómo llevás esa solidez al siguiente nivel? Marcas como la tuya están listas para <strong>sistemas de contenido estratégico, kits de marca completos y una presencia que escale sin perder su esencia</strong>.`;
+      tags = [{text:'Identidad visual sólida',type:'good'},{text:'Comunicación coherente',type:'good'},{text:'Lista para escalar',type:'good'},{text:'Nivel profesional',type:'good'}];
       color = 'var(--green)';
-      barColor = 'var(--green)';
-      barPct = Math.round((score / 30) * 100);
     }
 
+    barPct = Math.round((score / 30) * 100);
     document.getElementById('resultTitle').textContent = title;
     document.getElementById('resultSubtitle').textContent = subtitle;
     document.getElementById('resultDescription').innerHTML = desc;
@@ -714,7 +747,7 @@
     ring.querySelector('.score-num').style.color = color;
 
     const bar = document.getElementById('levelBarFill');
-    bar.style.background = barColor;
+    bar.style.background = color;
     setTimeout(() => { bar.style.width = barPct + '%'; }, 100);
 
     const tagsEl = document.getElementById('resultTags');
@@ -731,8 +764,9 @@
     answers = {};
     document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
     document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+    document.querySelectorAll('.error-msg').forEach(e => e.classList.remove('visible'));
     document.getElementById('result').classList.remove('visible');
-    goToStep(1);
+    showStep(1);
     updateProgress();
   }
 
