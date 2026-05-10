@@ -6,110 +6,205 @@
   <title>Calculadora de Presupuestos — Batifondo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Calistoga&family=Nunito:wght@400;600;700;800&family=Poppins:wght@700&family=Rock+Salt&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Calistoga&family=Nunito:wght@400;600;700;800&family=Poppins:wght@700&family=Rock+Salt&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <style>
+    /* ═══════════════════════════════════════════
+       SCREEN STYLES
+    ══════════════════════════════════════════════ */
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{
       --lime:#c8e000;--blue:#4d6af5;--hot-pink:#ec4899;
       --purple:#5569f5;--dark:#1e2a6e;--white:#fff;
     }
-    body{font-family:'Nunito',sans-serif;background:var(--white);color:var(--dark);overflow-x:hidden}
+    body{font-family:'Nunito',sans-serif;background:#f5f5f3;color:var(--dark);overflow-x:hidden}
 
     /* COVER */
-    .cover{background:var(--lime);padding:3.5rem 2rem 3rem;text-align:center;position:relative;overflow:hidden}
+    .cover{background:var(--lime);padding:3rem 2rem 2.8rem;text-align:center;position:relative}
     .cover::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:8px;background:repeating-linear-gradient(90deg,var(--dark) 0,var(--dark) 18px,transparent 18px,transparent 24px)}
-    .cover-label{font-family:'Rock Salt',cursive;font-size:.7rem;color:var(--blue);letter-spacing:2px;margin-bottom:1.2rem}
-    .cover h1{font-family:'Calistoga',serif;font-weight:400;font-size:clamp(2rem,5vw,3.4rem);color:var(--dark);line-height:1.1;margin-bottom:1rem}
+    .cover-label{font-family:'Rock Salt',cursive;font-size:.65rem;color:var(--blue);letter-spacing:2px;margin-bottom:1rem}
+    .cover h1{font-family:'Calistoga',serif;font-weight:400;font-size:clamp(1.8rem,4vw,3rem);color:var(--dark);line-height:1.1;margin-bottom:.9rem}
     .cover h1 em{font-style:normal;color:var(--blue)}
-    .cover-sub{font-size:1.05rem;color:var(--dark);opacity:.8;max-width:520px;margin:0 auto 1.5rem;line-height:1.6}
+    .cover-sub{font-size:1rem;color:var(--dark);opacity:.75;max-width:480px;margin:0 auto 1.4rem;line-height:1.6}
     .cover-tags{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center}
-    .tag{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;border:2px solid var(--dark);padding:4px 12px;color:var(--dark)}
+    .tag{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.68rem;letter-spacing:2px;text-transform:uppercase;border:2px solid var(--dark);padding:4px 11px;color:var(--dark)}
 
-    /* MAIN */
-    main{max-width:780px;margin:0 auto;padding:3rem 1.5rem 5rem}
+    /* LAYOUT */
+    .page-wrap{max-width:820px;margin:0 auto;padding:2.5rem 1.5rem 5rem}
 
-    /* SECTION LABELS */
-    .section-num{font-family:'Rock Salt',cursive;font-size:.65rem;color:var(--hot-pink);letter-spacing:2px;margin-bottom:.4rem}
-    .section-h{font-family:'Calistoga',serif;font-weight:400;font-size:1.9rem;color:var(--dark);margin-bottom:.3rem}
-    .section-desc{font-size:.95rem;color:var(--dark);opacity:.7;margin-bottom:2rem;line-height:1.6}
+    /* SECTION HEADINGS */
+    .sec-eyebrow{font-family:'Rock Salt',cursive;font-size:.6rem;color:var(--hot-pink);letter-spacing:2px;margin-bottom:.35rem}
+    .sec-h{font-family:'Calistoga',serif;font-weight:400;font-size:1.7rem;color:var(--dark);margin-bottom:.3rem}
+    .sec-desc{font-size:.9rem;color:var(--dark);opacity:.65;margin-bottom:1.8rem;line-height:1.6}
 
-    /* CARD */
-    .calc-card{border:3px solid var(--dark);padding:2rem;margin-bottom:3.5rem;position:relative}
+    /* CALC CARD */
+    .calc-card{border:3px solid var(--dark);padding:1.8rem;margin-bottom:2.5rem;background:var(--white);position:relative}
     .calc-card::before{content:'';position:absolute;top:6px;left:6px;right:-6px;bottom:-6px;background:var(--dark);z-index:-1}
 
-    /* INPUTS */
-    .field{margin-bottom:1.4rem}
-    .field label{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:.4rem}
+    /* FIELDS */
+    .fields-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    @media(max-width:560px){.fields-grid{grid-template-columns:1fr}}
+    .field{margin-bottom:0}
+    .field label{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:.35rem}
     .field input[type="number"],
-    .field select{width:100%;border:2px solid var(--dark);padding:12px 14px;font-family:'Nunito',sans-serif;font-size:1rem;color:var(--dark);background:var(--white);outline:none;appearance:none;-webkit-appearance:none}
-    .field input[type="number"]:focus,
-    .field select:focus{border-color:var(--blue)}
-    .field .hint{font-size:.8rem;color:var(--dark);opacity:.55;margin-top:.3rem}
-
-    /* SELECT CUSTOM */
+    .field select{width:100%;border:2px solid var(--dark);padding:10px 12px;font-family:'Nunito',sans-serif;font-size:.95rem;color:var(--dark);background:var(--white);outline:none;appearance:none;-webkit-appearance:none}
+    .field input:focus,.field select:focus{border-color:var(--blue)}
+    .field .hint{font-size:.75rem;color:var(--dark);opacity:.5;margin-top:.25rem}
     .select-wrap{position:relative}
-    .select-wrap::after{content:'▾';position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:1rem;color:var(--dark);pointer-events:none}
+    .select-wrap::after{content:'▾';position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:.9rem;color:var(--dark);pointer-events:none}
 
     /* TOGGLE */
-    .toggle-row{display:flex;align-items:center;gap:1rem;margin-bottom:1.4rem}
-    .toggle-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--blue)}
-    .toggle{position:relative;width:48px;height:26px;cursor:pointer}
+    .toggle-row{display:flex;align-items:center;gap:.8rem;padding:1rem 0}
+    .toggle-label-text{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--blue)}
+    .toggle{position:relative;width:44px;height:24px;cursor:pointer;flex-shrink:0}
     .toggle input{opacity:0;width:0;height:0}
     .toggle-track{position:absolute;inset:0;background:#ddd;border:2px solid var(--dark);transition:.2s}
     .toggle input:checked + .toggle-track{background:var(--hot-pink)}
-    .toggle-thumb{position:absolute;top:2px;left:2px;width:18px;height:18px;background:var(--dark);transition:.2s}
-    .toggle input:checked ~ .toggle-thumb{left:26px;background:var(--white)}
-    .rush-badge{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;background:var(--hot-pink);color:var(--white);padding:3px 10px;opacity:0;transition:.2s}
-    .rush-badge.active{opacity:1}
+    .toggle-thumb{position:absolute;top:2px;left:2px;width:16px;height:16px;background:var(--dark);transition:.2s;pointer-events:none}
+    .toggle input:checked ~ .toggle-thumb{left:24px;background:var(--white)}
+    .rush-pill{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;background:var(--hot-pink);color:var(--white);padding:3px 9px;opacity:0;transition:.2s}
+    .rush-pill.on{opacity:1}
 
-    /* RESULT BOX */
-    .result{background:var(--dark);color:var(--white);padding:1.8rem;margin-top:1.8rem}
-    .result-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.7rem;letter-spacing:3px;text-transform:uppercase;opacity:.6;margin-bottom:.4rem}
-    .result-main{font-family:'Calistoga',serif;font-weight:400;font-size:2.6rem;color:var(--lime);line-height:1}
-    .result-sub{font-size:.85rem;opacity:.65;margin-top:.5rem}
-    .result-breakdown{margin-top:1.2rem;border-top:1px solid rgba(255,255,255,.15);padding-top:1rem;display:flex;flex-direction:column;gap:.35rem}
-    .breakdown-row{display:flex;justify-content:space-between;font-size:.88rem}
-    .breakdown-row .bk-label{opacity:.65}
-    .breakdown-row .bk-val{font-weight:700;color:var(--lime)}
-    .breakdown-row.total-row{border-top:1px solid rgba(255,255,255,.2);margin-top:.3rem;padding-top:.6rem;font-size:1rem}
-    .breakdown-row.total-row .bk-val{font-size:1.2rem;color:var(--hot-pink)}
+    /* RESULT */
+    .result-box{background:var(--dark);color:var(--white);padding:1.6rem;margin-top:1.5rem}
+    .res-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.65rem;letter-spacing:3px;text-transform:uppercase;opacity:.55;margin-bottom:.3rem}
+    .res-main{font-family:'Calistoga',serif;font-size:2.4rem;color:var(--lime);line-height:1}
+    .res-note{font-size:.8rem;opacity:.55;margin-top:.4rem}
+    .res-breakdown{margin-top:1rem;border-top:1px solid rgba(255,255,255,.12);padding-top:.9rem;display:flex;flex-direction:column;gap:.3rem}
+    .brow{display:flex;justify-content:space-between;font-size:.85rem}
+    .brow .bl{opacity:.55}
+    .brow .bv{font-weight:700;color:var(--lime)}
+    .brow.btot{border-top:1px solid rgba(255,255,255,.15);margin-top:.3rem;padding-top:.5rem}
+    .brow.btot .bv{color:var(--hot-pink);font-size:1.1rem}
 
     /* DIVIDER */
-    .divider{border:none;border-top:3px solid var(--lime);margin:1rem 0 2rem}
+    hr.div{border:none;border-top:3px solid var(--lime);margin:0 0 2rem}
 
-    /* CTA STRIP */
-    .cta-strip{background:var(--blue);padding:2.5rem 2rem;text-align:center;border:3px solid var(--dark);position:relative}
-    .cta-strip::before{content:'';position:absolute;top:6px;left:6px;right:-6px;bottom:-6px;background:var(--dark);z-index:-1}
-    .cta-strip .cta-label{font-family:'Rock Salt',cursive;font-size:.65rem;color:var(--lime);letter-spacing:2px;margin-bottom:.8rem}
-    .cta-strip h2{font-family:'Calistoga',serif;font-weight:400;font-size:1.7rem;color:var(--white);margin-bottom:.6rem;line-height:1.2}
-    .cta-strip p{color:rgba(255,255,255,.75);font-size:.95rem;margin-bottom:1.5rem;line-height:1.5}
-    .email-form{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;max-width:480px;margin:0 auto}
-    .email-form input[type="email"]{flex:1;min-width:220px;border:3px solid var(--lime);padding:13px 16px;font-family:'Nunito',sans-serif;font-size:1rem;background:rgba(255,255,255,.1);color:var(--white);outline:none}
-    .email-form input[type="email"]::placeholder{color:rgba(255,255,255,.45)}
-    .email-form input[type="email"]:focus{background:rgba(255,255,255,.18)}
-    .btn-cta{font-family:'Poppins',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:1px;text-transform:uppercase;background:var(--lime);color:var(--dark);border:3px solid var(--dark);padding:13px 22px;cursor:pointer;white-space:nowrap;transition:background .15s}
-    .btn-cta:hover{background:var(--white)}
-    .form-legal{font-size:.75rem;color:rgba(255,255,255,.4);margin-top:.8rem}
-    .toast{display:none;background:var(--lime);color:var(--dark);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:1px;text-transform:uppercase;padding:10px 20px;margin-top:1rem;text-align:center}
-    .toast.show{display:block}
+    /* GENERATE BUTTON */
+    .gen-btn{width:100%;font-family:'Poppins',sans-serif;font-weight:700;font-size:.9rem;letter-spacing:1px;text-transform:uppercase;background:var(--blue);color:var(--white);border:3px solid var(--dark);padding:16px 24px;cursor:pointer;transition:background .15s;margin-top:1.5rem;display:flex;align-items:center;justify-content:center;gap:.6rem}
+    .gen-btn:hover{background:var(--dark)}
+    .gen-btn svg{width:18px;height:18px;fill:currentColor}
+
+    /* ═══════════════════════════════════════════
+       QUOTE DOCUMENT (screen)
+    ══════════════════════════════════════════════ */
+    #quote-wrap{display:none;margin-top:2.5rem}
+    #quote-wrap.visible{display:block}
+
+    .quote-doc{background:var(--white);border:1px solid #d0d0d0;box-shadow:0 4px 30px rgba(0,0,0,.08);max-width:760px;margin:0 auto;font-family:'Inter',sans-serif}
+
+    /* Editable fields inside doc */
+    [contenteditable]{outline:none;border-bottom:1px dashed #bbb;min-width:60px;display:inline-block;cursor:text}
+    [contenteditable]:focus{border-bottom:2px solid #4d6af5;background:#f0f4ff}
+    [contenteditable]:empty::before{content:attr(data-ph);color:#bbb;font-style:italic}
+    .edit-hint{font-size:.65rem;font-family:'Barlow Condensed',sans-serif;letter-spacing:1.5px;text-transform:uppercase;color:#999;text-align:center;margin-bottom:.5rem}
+
+    /* DOC HEADER */
+    .doc-header{display:grid;grid-template-columns:1fr 1fr;align-items:start;padding:2.5rem 2.5rem 1.8rem;border-bottom:2px solid #111;gap:1.5rem}
+    .logo-area{display:flex;flex-direction:column;gap:.6rem}
+    .logo-upload-btn{display:inline-flex;align-items:center;gap:.4rem;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:#888;border:1.5px dashed #bbb;padding:6px 12px;cursor:pointer;width:fit-content;transition:border-color .15s}
+    .logo-upload-btn:hover{border-color:#4d6af5;color:#4d6af5}
+    .logo-upload-btn input{display:none}
+    #logo-preview{max-height:70px;max-width:180px;display:none;object-fit:contain}
+    .sender-info{margin-top:.3rem}
+    .sender-name{font-size:1.1rem;font-weight:700;color:#111;margin-bottom:.15rem}
+    .sender-detail{font-size:.82rem;color:#555;line-height:1.7}
+
+    .doc-meta{text-align:right}
+    .doc-title{font-size:1.8rem;font-weight:700;color:#111;letter-spacing:-0.5px;margin-bottom:.6rem}
+    .meta-table{display:flex;flex-direction:column;gap:.25rem;align-items:flex-end}
+    .meta-row{display:flex;gap:.5rem;align-items:center;font-size:.82rem}
+    .meta-key{color:#888;text-transform:uppercase;letter-spacing:1px;font-size:.68rem;font-weight:600}
+    .meta-val{color:#111;font-weight:500}
+
+    /* DOC CLIENT */
+    .doc-client{padding:1.5rem 2.5rem;border-bottom:1px solid #e5e5e5;background:#fafafa}
+    .client-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#999;margin-bottom:.5rem}
+    .client-name-line{font-size:1rem;font-weight:700;color:#111;margin-bottom:.15rem}
+    .client-detail{font-size:.83rem;color:#555;line-height:1.7}
+
+    /* DOC PROJECT */
+    .doc-project{padding:1.5rem 2.5rem;border-bottom:1px solid #e5e5e5}
+    .proj-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#999;margin-bottom:.5rem}
+    .proj-name{font-size:1rem;font-weight:700;color:#111;margin-bottom:.3rem}
+    .proj-desc{font-size:.85rem;color:#555;line-height:1.7}
+
+    /* DOC TABLE */
+    .doc-table{width:100%;border-collapse:collapse;margin:0}
+    .doc-table thead tr{background:#111;color:#fff}
+    .doc-table thead th{padding:.75rem 1rem;font-size:.7rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;text-align:left}
+    .doc-table thead th:last-child{text-align:right}
+    .doc-table tbody tr{border-bottom:1px solid #eee}
+    .doc-table tbody tr:last-child{border-bottom:none}
+    .doc-table td{padding:.75rem 1rem;font-size:.88rem;color:#333;vertical-align:top}
+    .doc-table td:last-child{text-align:right;font-weight:600;color:#111}
+    .doc-table td .td-sub{font-size:.75rem;color:#999;margin-top:.15rem}
+    .rush-row td{color:var(--hot-pink) !important}
+    .rush-row td:last-child{color:var(--hot-pink) !important}
+
+    /* DOC TOTALS */
+    .totals-area{padding:1.2rem 2.5rem 1.5rem;border-top:2px solid #111}
+    .totals-table{width:100%;max-width:280px;margin-left:auto}
+    .tot-row{display:flex;justify-content:space-between;padding:.3rem 0;font-size:.88rem;color:#555;border-bottom:1px solid #eee}
+    .tot-row:last-child{border-bottom:none;padding-top:.6rem;font-size:1rem;font-weight:700;color:#111}
+    .tot-row.grand{border-top:2px solid #111;margin-top:.3rem}
+    .tot-row .tv{font-weight:500}
+    .tot-row.grand .tv{font-weight:700}
+    .iva-toggle-row{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem}
+    .iva-check{cursor:pointer;accent-color:#111;width:14px;height:14px}
+    .iva-check-label{font-size:.72rem;color:#888;font-weight:500;cursor:pointer}
+
+    /* DOC TERMS */
+    .doc-terms{padding:1.4rem 2.5rem 2rem;border-top:1px solid #e5e5e5;background:#fafafa}
+    .terms-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#999;margin-bottom:.7rem}
+    .terms-list{display:flex;flex-direction:column;gap:.35rem}
+    .term-item{font-size:.82rem;color:#555;line-height:1.5;display:flex;gap:.5rem}
+    .term-item::before{content:'—';color:#bbb;flex-shrink:0}
+
+    /* DOC FOOTER */
+    .doc-footer{padding:1.2rem 2.5rem;border-top:2px solid #111;display:flex;justify-content:space-between;align-items:center;background:#fff}
+    .footer-brand{font-size:.72rem;color:#bbb;font-weight:500}
+    .footer-sig{font-size:.82rem;color:#555;text-align:right}
+    .sig-name{font-weight:700;color:#111}
+
+    /* PRINT / ACTIONS */
+    .doc-actions{display:flex;gap:.8rem;justify-content:flex-end;margin-top:1rem;flex-wrap:wrap}
+    .act-btn{font-family:'Poppins',sans-serif;font-weight:700;font-size:.75rem;letter-spacing:1px;text-transform:uppercase;padding:12px 20px;cursor:pointer;border:2px solid var(--dark);transition:.15s;display:inline-flex;align-items:center;gap:.4rem}
+    .act-btn.primary{background:var(--dark);color:var(--white)}
+    .act-btn.primary:hover{background:var(--blue);border-color:var(--blue)}
+    .act-btn.secondary{background:var(--white);color:var(--dark)}
+    .act-btn.secondary:hover{background:var(--lime);border-color:var(--dark)}
 
     /* TIPS */
-    .tips{margin-top:3.5rem}
-    .tips-label{font-family:'Rock Salt',cursive;font-size:.65rem;color:var(--purple);letter-spacing:2px;margin-bottom:1.2rem}
-    .tip-list{display:flex;flex-direction:column;gap:.8rem}
-    .tip{display:flex;gap:1rem;align-items:flex-start;border-left:4px solid var(--lime);padding-left:1rem}
-    .tip-icon{font-size:1.2rem;flex-shrink:0;margin-top:2px}
-    .tip-text{font-size:.92rem;line-height:1.5;color:var(--dark);opacity:.85}
-    .tip-text strong{color:var(--blue)}
+    .tips-section{margin-top:3rem}
+    .tips-eyebrow{font-family:'Rock Salt',cursive;font-size:.6rem;color:var(--purple);letter-spacing:2px;margin-bottom:1rem}
+    .tips-grid{display:flex;flex-direction:column;gap:.7rem}
+    .tip{display:flex;gap:.9rem;align-items:flex-start;padding:.9rem;border-left:4px solid var(--lime);background:var(--white)}
+    .tip-icon{font-size:1.1rem;flex-shrink:0;margin-top:1px}
+    .tip-body{font-size:.88rem;line-height:1.55;color:var(--dark);opacity:.8}
+    .tip-body strong{color:var(--blue);opacity:1}
 
     /* FOOTER */
-    footer{background:var(--dark);color:rgba(255,255,255,.5);text-align:center;padding:1.5rem;font-size:.8rem;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;text-transform:uppercase}
+    footer{background:var(--dark);color:rgba(255,255,255,.45);text-align:center;padding:1.3rem;font-size:.75rem;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;text-transform:uppercase}
     footer a{color:var(--lime);text-decoration:none}
 
+    /* ═══════════════════════════════════════════
+       PRINT STYLES
+    ══════════════════════════════════════════════ */
+    @media print {
+      body{background:white;margin:0;padding:0}
+      .cover,.page-wrap > *:not(#quote-wrap),.doc-actions,.edit-hint,.logo-upload-btn,.tips-section,footer{display:none !important}
+      #quote-wrap{display:block !important;margin:0 !important}
+      .quote-doc{box-shadow:none !important;border:none !important;max-width:100% !important}
+      [contenteditable]{border-bottom:none !important;background:none !important}
+      #iva-toggle-wrap{display:none}
+      .iva-toggle-row{display:none}
+      .doc-header{page-break-inside:avoid}
+    }
+
     @media(max-width:600px){
-      .calc-card{padding:1.4rem}
-      .cover{padding:2.5rem 1.2rem 2.2rem}
-      .result-main{font-size:2rem}
+      .doc-header{grid-template-columns:1fr;gap:1rem}
+      .doc-meta{text-align:left}
+      .meta-table{align-items:flex-start}
     }
   </style>
 </head>
@@ -119,312 +214,444 @@
 <div class="cover">
   <div class="cover-label">Herramienta gratuita · Batifondo</div>
   <h1>Calculadora de<br><em>presupuestos</em><br>para diseñadoras freelance</h1>
-  <p class="cover-sub">Calculá tu tarifa mínima por hora y armá presupuestos de proyectos en segundos. Sin Excel, sin adivinar.</p>
+  <p class="cover-sub">Calculá tu tarifa, armá el presupuesto y generá un documento profesional listo para enviarle a tu cliente.</p>
   <div class="cover-tags">
     <span class="tag">Tarifa por hora</span>
     <span class="tag">Presupuesto por proyecto</span>
+    <span class="tag">Documento imprimible</span>
     <span class="tag">100% gratis</span>
   </div>
 </div>
 
-<main>
+<div class="page-wrap">
 
-  <!-- SECCIÓN 1: TARIFA POR HORA -->
-  <div class="section-num">Parte 01</div>
-  <div class="section-h">Tarifa mínima por hora</div>
-  <p class="section-desc">Calculá cuánto necesitás cobrar por hora para cubrir tus gastos y llegar a tus ingresos objetivo. Este número es tu piso — cobrar menos que esto significa trabajar a pérdida.</p>
+  <!-- ── PASO 1: TARIFA ──────────────────────────────────────────────── -->
+  <div style="margin-bottom:2rem">
+    <div class="sec-eyebrow">Paso 01</div>
+    <div class="sec-h">Tu tarifa mínima por hora</div>
+    <p class="sec-desc">Calculá cuánto necesitás cobrar por hora para cubrir gastos y alcanzar tu ingreso objetivo.</p>
+  </div>
 
   <div class="calc-card">
-    <div class="field">
-      <label>Ingreso neto mensual deseado (€)</label>
-      <input type="number" id="income" value="2000" min="0" oninput="calcHourly()"/>
-      <p class="hint">Lo que querés llevarte a casa después de impuestos y gastos</p>
+    <div class="fields-grid">
+      <div class="field">
+        <label>Ingreso neto mensual deseado (€)</label>
+        <input type="number" id="income" value="2000" min="0" oninput="calcAll()"/>
+        <p class="hint">Lo que querés llevarte a casa después de impuestos</p>
+      </div>
+      <div class="field">
+        <label>Horas facturables por semana</label>
+        <input type="number" id="hoursWeek" value="30" min="1" max="80" oninput="calcAll()"/>
+        <p class="hint">Solo horas de trabajo en proyectos de clientes</p>
+      </div>
+      <div class="field">
+        <label>Semanas de vacaciones al año</label>
+        <input type="number" id="vacWeeks" value="4" min="0" max="20" oninput="calcAll()"/>
+      </div>
+      <div class="field">
+        <label>Gastos fijos mensuales (€)</label>
+        <input type="number" id="overhead" value="300" min="0" oninput="calcAll()"/>
+        <p class="hint">Software, internet, hardware, espacio, seguros…</p>
+      </div>
     </div>
-    <div class="field">
-      <label>Horas de trabajo por semana</label>
-      <input type="number" id="hoursWeek" value="40" min="1" max="80" oninput="calcHourly()"/>
-      <p class="hint">Incluye solo horas facturables (no reuniones, admin, marketing propio)</p>
-    </div>
-    <div class="field">
-      <label>Semanas de vacaciones al año</label>
-      <input type="number" id="vacWeeks" value="4" min="0" max="20" oninput="calcHourly()"/>
-    </div>
-    <div class="field">
-      <label>Gastos fijos mensuales (€)</label>
-      <input type="number" id="overhead" value="300" min="0" oninput="calcHourly()"/>
-      <p class="hint">Software, internet, hardware, espacio de trabajo, seguros, etc.</p>
-    </div>
-
-    <div class="result">
-      <div class="result-label">Tu tarifa mínima por hora</div>
-      <div class="result-main" id="hourlyRate">€ 0</div>
-      <div class="result-sub" id="hourlyContext">—</div>
-      <div class="result-breakdown">
-        <div class="breakdown-row">
-          <span class="bk-label">Horas facturables/año</span>
-          <span class="bk-val" id="bk-hours">—</span>
-        </div>
-        <div class="breakdown-row">
-          <span class="bk-label">Horas facturables/mes</span>
-          <span class="bk-val" id="bk-hoursMonth">—</span>
-        </div>
-        <div class="breakdown-row">
-          <span class="bk-label">Necesitás cubrir al mes</span>
-          <span class="bk-val" id="bk-need">—</span>
-        </div>
-        <div class="breakdown-row total-row">
-          <span class="bk-label">Tarifa mínima</span>
-          <span class="bk-val" id="bk-rate">—</span>
-        </div>
+    <div class="result-box">
+      <div class="res-label">Tarifa mínima por hora</div>
+      <div class="res-main" id="rHourly">€ —</div>
+      <div class="res-note" id="rHourlyNote">—</div>
+      <div class="res-breakdown">
+        <div class="brow"><span class="bl">Horas facturables / mes</span><span class="bv" id="bHoursM">—</span></div>
+        <div class="brow"><span class="bl">Total a cubrir / mes</span><span class="bv" id="bNeed">—</span></div>
+        <div class="brow btot"><span class="bl">Tarifa mínima</span><span class="bv" id="bRate">—</span></div>
       </div>
     </div>
   </div>
 
-  <hr class="divider"/>
+  <hr class="div"/>
 
-  <!-- SECCIÓN 2: PRESUPUESTO DE PROYECTO -->
-  <div class="section-num">Parte 02</div>
-  <div class="section-h">Presupuesto por proyecto</div>
-  <p class="section-desc">Con tu tarifa calculada (o la que ya usás), armá presupuestos detallados al instante. Incluye margen por urgencia, revisiones y tipo de proyecto.</p>
+  <!-- ── PASO 2: PROYECTO ──────────────────────────────────────────────── -->
+  <div style="margin-bottom:2rem">
+    <div class="sec-eyebrow">Paso 02</div>
+    <div class="sec-h">Presupuesto del proyecto</div>
+    <p class="sec-desc">Definí el alcance y generá el monto. Podés ajustar la tarifa libremente.</p>
+  </div>
 
   <div class="calc-card">
-    <div class="field">
-      <label>Tu tarifa por hora (€)</label>
-      <input type="number" id="myRate" value="50" min="1" oninput="calcProject()"/>
-      <p class="hint">Usá la tarifa calculada arriba o la que ya estás cobrando</p>
-    </div>
-
-    <div class="field">
-      <label>Tipo de proyecto</label>
-      <div class="select-wrap">
-        <select id="projectType" onchange="calcProject()">
-          <option value="branding" data-base="20">Identidad / Branding completo</option>
-          <option value="redes" data-base="8">Redes sociales (pack mensual)</option>
-          <option value="marketing" data-base="6">Materiales de marketing (flyers, banners)</option>
-          <option value="soporte" data-base="4">Soporte de marca (piezas sueltas)</option>
-          <option value="otro" data-base="0">Otro</option>
-        </select>
+    <div class="fields-grid">
+      <div class="field">
+        <label>Tu tarifa por hora (€)</label>
+        <input type="number" id="myRate" value="50" min="1" oninput="calcAll()"/>
       </div>
-      <p class="hint" id="typeHint">Estimado: 20–40 hs para un proyecto de branding completo</p>
-    </div>
-
-    <div class="field">
-      <label>Horas estimadas del proyecto</label>
-      <input type="number" id="projHours" value="20" min="1" oninput="calcProject()"/>
-    </div>
-
-    <div class="field">
-      <label>Revisiones incluidas</label>
-      <input type="number" id="revisions" value="2" min="0" max="10" oninput="calcProject()"/>
-      <p class="hint">Cada revisión extra = 1 hs adicional de trabajo estimada</p>
+      <div class="field">
+        <label>Tipo de proyecto</label>
+        <div class="select-wrap">
+          <select id="projectType" onchange="updateTypeHint();calcAll()">
+            <option value="Identidad / Branding completo">Identidad / Branding completo</option>
+            <option value="Redes sociales (pack mensual)">Redes sociales (pack mensual)</option>
+            <option value="Materiales de marketing">Materiales de marketing</option>
+            <option value="Soporte de marca / piezas sueltas">Soporte de marca / piezas sueltas</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
+        <p class="hint" id="typeHint">Estimado típico: 20–40 hs</p>
+      </div>
+      <div class="field">
+        <label>Horas estimadas del proyecto</label>
+        <input type="number" id="projHours" value="20" min="1" oninput="calcAll()"/>
+      </div>
+      <div class="field">
+        <label>Revisiones incluidas</label>
+        <input type="number" id="revisions" value="2" min="0" max="10" oninput="calcAll()"/>
+        <p class="hint">Cada revisión = 1 hs estimada adicional</p>
+      </div>
     </div>
 
     <div class="toggle-row">
-      <span class="toggle-label">Urgencia / Rush</span>
+      <span class="toggle-label-text">Urgencia / Rush (+50%)</span>
       <label class="toggle">
-        <input type="checkbox" id="rushToggle" onchange="calcProject()"/>
+        <input type="checkbox" id="rushToggle" onchange="calcAll()"/>
         <div class="toggle-track"></div>
         <div class="toggle-thumb"></div>
       </label>
-      <span class="rush-badge" id="rushBadge">+50% urgencia</span>
+      <span class="rush-pill" id="rushPill">Rush activado</span>
     </div>
 
-    <div class="result">
-      <div class="result-label">Presupuesto sugerido</div>
-      <div class="result-main" id="projTotal">€ 0</div>
-      <div class="result-sub" id="projContext">—</div>
-      <div class="result-breakdown">
-        <div class="breakdown-row">
-          <span class="bk-label">Horas base del proyecto</span>
-          <span class="bk-val" id="bk-baseHours">—</span>
-        </div>
-        <div class="breakdown-row">
-          <span class="bk-label">Horas por revisiones</span>
-          <span class="bk-val" id="bk-revHours">—</span>
-        </div>
-        <div class="breakdown-row">
-          <span class="bk-label">Total de horas</span>
-          <span class="bk-val" id="bk-totalHours">—</span>
-        </div>
-        <div class="breakdown-row">
-          <span class="bk-label">Costo base (horas × tarifa)</span>
-          <span class="bk-val" id="bk-baseCost">—</span>
-        </div>
-        <div class="breakdown-row" id="rushRow" style="display:none">
-          <span class="bk-label">Recargo por urgencia (+50%)</span>
-          <span class="bk-val" id="bk-rush" style="color:var(--hot-pink)">—</span>
-        </div>
-        <div class="breakdown-row total-row">
-          <span class="bk-label">Presupuesto total</span>
-          <span class="bk-val" id="bk-total">—</span>
-        </div>
+    <div class="result-box">
+      <div class="res-label">Presupuesto total del proyecto</div>
+      <div class="res-main" id="rTotal">€ —</div>
+      <div class="res-note" id="rTotalNote">—</div>
+      <div class="res-breakdown">
+        <div class="brow"><span class="bl">Horas base</span><span class="bv" id="bBase">—</span></div>
+        <div class="brow"><span class="bl">Revisiones</span><span class="bv" id="bRevs">—</span></div>
+        <div class="brow"><span class="bl">Total de horas</span><span class="bv" id="bTotalH">—</span></div>
+        <div class="brow"><span class="bl">Costo base</span><span class="bv" id="bBaseCost">—</span></div>
+        <div class="brow" id="bRushRow" style="display:none"><span class="bl">Recargo rush (+50%)</span><span class="bv" style="color:var(--hot-pink)" id="bRushAmt">—</span></div>
+        <div class="brow btot"><span class="bl">Total</span><span class="bv" id="bFinal">—</span></div>
       </div>
     </div>
 
-    <!-- RANGO CONTEXTUAL -->
-    <div id="marketRange" style="margin-top:1.2rem;padding:1rem;background:rgba(200,224,0,.12);border:2px solid var(--lime);display:none">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--dark);margin-bottom:.4rem">Referencia de mercado</div>
-      <div id="marketRangeText" style="font-size:.88rem;line-height:1.5;color:var(--dark);opacity:.8"></div>
-    </div>
+    <button class="gen-btn" onclick="generateQuote()">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 4h5v7h7v9H6V4z"/></svg>
+      Generar documento de presupuesto
+    </button>
   </div>
 
-  <!-- CTA -->
-  <div class="cta-strip">
-    <div class="cta-label">Plantilla editable · PDF + Excel</div>
-    <h2>Llevate la planilla de presupuesto lista para usar</h2>
-    <p>Completá tu mail y te mando la plantilla editable para armar presupuestos profesionales con logo, desglose y condiciones incluidas.</p>
-    <form class="email-form" onsubmit="handleSubmit(event)">
-      <input type="email" id="emailInput" placeholder="tu@email.com" required/>
-      <button type="submit" class="btn-cta">Quiero la plantilla →</button>
-    </form>
-    <p class="form-legal">Sin spam. Podés darte de baja en cualquier momento.</p>
-    <div class="toast" id="toast">¡Listo! Revisá tu casilla de correo 📬</div>
-  </div>
+  <!-- ── PASO 3: DOCUMENTO ──────────────────────────────────────────────── -->
+  <div id="quote-wrap">
+
+    <div style="margin-bottom:1.5rem">
+      <div class="sec-eyebrow">Paso 03</div>
+      <div class="sec-h">Tu presupuesto profesional</div>
+      <p class="sec-desc">Hacé clic en cualquier campo en gris punteado para editarlo. Cuando esté listo, imprimilo o guardalo como PDF.</p>
+    </div>
+
+    <p class="edit-hint">✎ &nbsp;Los campos con subrayado punteado son editables — hacé clic para modificar</p>
+
+    <div class="quote-doc" id="quoteDoc">
+
+      <!-- HEADER -->
+      <div class="doc-header">
+        <div class="logo-area">
+          <label class="logo-upload-btn" id="logoUploadLabel">
+            <input type="file" accept="image/*" id="logoInput" onchange="handleLogo(this)"/>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+            Subir logo
+          </label>
+          <img id="logo-preview" src="" alt="Logo"/>
+          <div class="sender-info">
+            <div class="sender-name"><span contenteditable data-ph="Tu nombre o estudio" id="senderName">Tu nombre o estudio</span></div>
+            <div class="sender-detail">
+              <span contenteditable data-ph="tu@email.com" id="senderEmail">tu@email.com</span><br/>
+              <span contenteditable data-ph="+34 000 000 000" id="senderPhone">+34 000 000 000</span><br/>
+              <span contenteditable data-ph="tuwebsite.com" id="senderWeb">tuwebsite.com</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="doc-meta">
+          <div class="doc-title">PRESUPUESTO</div>
+          <div class="meta-table">
+            <div class="meta-row"><span class="meta-key">Nº</span><span class="meta-val"><span contenteditable data-ph="001" id="quoteNum">001</span></span></div>
+            <div class="meta-row"><span class="meta-key">Fecha</span><span class="meta-val" id="quoteDate">—</span></div>
+            <div class="meta-row"><span class="meta-key">Válido hasta</span><span class="meta-val" id="quoteExpiry">—</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CLIENT -->
+      <div class="doc-client">
+        <div class="client-label">Presupuesto para</div>
+        <div class="client-name-line"><span contenteditable data-ph="Nombre del cliente o empresa" id="clientName">Nombre del cliente o empresa</span></div>
+        <div class="client-detail">
+          <span contenteditable data-ph="email@cliente.com" id="clientEmail">email@cliente.com</span><br/>
+          <span contenteditable data-ph="Ciudad, País" id="clientLocation">Ciudad, País</span>
+        </div>
+      </div>
+
+      <!-- PROJECT -->
+      <div class="doc-project">
+        <div class="proj-label">Descripción del proyecto</div>
+        <div class="proj-name"><span contenteditable data-ph="Nombre del proyecto" id="projNameDoc">Nombre del proyecto</span></div>
+        <div class="proj-desc"><span contenteditable data-ph="Breve descripción del alcance: qué incluye el proyecto, objetivos, entregables…" id="projDescDoc">Breve descripción del alcance: qué incluye el proyecto, objetivos, entregables…</span></div>
+      </div>
+
+      <!-- TABLE -->
+      <table class="doc-table">
+        <thead>
+          <tr>
+            <th style="width:45%">Concepto</th>
+            <th style="width:15%">Horas</th>
+            <th style="width:20%">Tarifa/hora</th>
+            <th style="width:20%">Subtotal</th>
+          </tr>
+        </thead>
+        <tbody id="quoteTableBody">
+          <!-- populated by JS -->
+        </tbody>
+      </table>
+
+      <!-- TOTALS -->
+      <div class="totals-area">
+        <div class="iva-toggle-row" id="iva-toggle-wrap">
+          <input type="checkbox" class="iva-check" id="ivaCheck" onchange="renderTotals()"/>
+          <label class="iva-check-label" for="ivaCheck">Incluir IVA (<span contenteditable data-ph="21" id="ivaRate">21</span>%)</label>
+        </div>
+        <div class="totals-table" id="totalsTable">
+          <!-- populated by JS -->
+        </div>
+      </div>
+
+      <!-- TERMS -->
+      <div class="doc-terms">
+        <div class="terms-label">Condiciones</div>
+        <div class="terms-list">
+          <div class="term-item"><span contenteditable data-ph="Forma de pago">Forma de pago: 50% anticipo al inicio, 50% contra entrega</span></div>
+          <div class="term-item"><span contenteditable data-ph="Tiempo de entrega">Tiempo de entrega: según el alcance acordado, a confirmar en el brief</span></div>
+          <div class="term-item"><span contenteditable data-ph="Revisiones">Las revisiones adicionales más allá de las incluidas se cotizan a <span id="termRateRef">€ 50</span>/hora</span></div>
+          <div class="term-item"><span contenteditable data-ph="Validez">Presupuesto válido por 30 días desde la fecha de emisión</span></div>
+          <div class="term-item"><span contenteditable data-ph="Derechos">Los archivos finales y derechos de uso se transfieren al cliente contra el pago total</span></div>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div class="doc-footer">
+        <div class="footer-brand">Generado con Calculadora Batifondo · batifondostudio.github.io/batifondo</div>
+        <div class="footer-sig">
+          <div style="font-size:.72rem;color:#bbb;margin-bottom:.2rem">Firma / Firma digital</div>
+          <div class="sig-name" id="sigName">—</div>
+        </div>
+      </div>
+
+    </div><!-- /quote-doc -->
+
+    <div class="doc-actions">
+      <button class="act-btn secondary" onclick="resetQuote()">← Volver a editar</button>
+      <button class="act-btn primary" onclick="window.print()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg>
+        Imprimir / Guardar PDF
+      </button>
+    </div>
+
+  </div><!-- /quote-wrap -->
 
   <!-- TIPS -->
-  <div class="tips">
-    <div class="tips-label">Tips para cobrar mejor</div>
-    <div class="tip-list">
-      <div class="tip">
-        <span class="tip-icon">💡</span>
-        <span class="tip-text"><strong>Tu tarifa mínima es eso: mínima.</strong> Si el proyecto te aporta portfolio, aprendizaje o un cliente estratégico, podés bajarla. Si no, no.</span>
-      </div>
-      <div class="tip">
-        <span class="tip-icon">📋</span>
-        <span class="tip-text"><strong>Siempre por escrito.</strong> El presupuesto debe incluir qué está incluido, cuántas revisiones, plazos de entrega y forma de pago. Evitá malentendidos desde el principio.</span>
-      </div>
-      <div class="tip">
-        <span class="tip-icon">⏰</span>
-        <span class="tip-text"><strong>El rush es un servicio premium.</strong> Reorganizar tu agenda, trabajar fuera de horario o priorizar un proyecto tiene un costo real. Cobrarlo no es malo — es profesional.</span>
-      </div>
-      <div class="tip">
-        <span class="tip-icon">🔄</span>
-        <span class="tip-text"><strong>Limitá las revisiones en el contrato.</strong> "Revisiones ilimitadas" es la forma más rápida de perder dinero en diseño freelance. Establecé cuántas incluís y cuánto cuesta cada adicional.</span>
-      </div>
-      <div class="tip">
-        <span class="tip-icon">📈</span>
-        <span class="tip-text"><strong>Revisá tu tarifa cada 6 meses.</strong> Tu experiencia crece, tus costos cambian, el mercado se mueve. Si llevás más de un año sin subir tu tarifa, probablemente ya quedó desactualizada.</span>
-      </div>
+  <div class="tips-section">
+    <div class="tips-eyebrow">Consejos de cobro</div>
+    <div class="tips-grid">
+      <div class="tip"><span class="tip-icon">💡</span><span class="tip-body"><strong>Tu tarifa mínima es eso: mínima.</strong> Si el proyecto te da portfolio valioso, podés bajarla. Si no aporta nada estratégico, mantené el precio.</span></div>
+      <div class="tip"><span class="tip-icon">📋</span><span class="tip-body"><strong>Siempre por escrito.</strong> El presupuesto firmado es tu contrato mínimo. Incluí siempre qué está incluido, cuántas revisiones y la forma de pago.</span></div>
+      <div class="tip"><span class="tip-icon">⏰</span><span class="tip-body"><strong>El rush es un servicio premium.</strong> Reorganizar tu agenda, trabajar fuera de horario o priorizar un cliente tiene un costo real. Cobrarlo es profesional.</span></div>
+      <div class="tip"><span class="tip-icon">🔄</span><span class="tip-body"><strong>Limitá las revisiones.</strong> "Revisiones ilimitadas" es la trampa más cara del freelance. Especificá el número y dejá en claro que las adicionales tienen un costo.</span></div>
+      <div class="tip"><span class="tip-icon">📈</span><span class="tip-body"><strong>Revisá tu tarifa cada 6 meses.</strong> Tu experiencia crece, tus costos cambian. Si hace más de un año que no subís tu tarifa, probablemente ya quedó desactualizada.</span></div>
     </div>
   </div>
 
-</main>
+</div><!-- /page-wrap -->
 
 <footer>
   Hecho con ❤️ por <a href="https://batifondostudio.github.io/batifondo/" target="_blank">Batifondo</a> · Diseño gráfico freelance para marcas con personalidad
 </footer>
 
 <script>
-  const fmt = n => '€ ' + Math.round(n).toLocaleString('es-ES');
+  // ── FORMATTERS ────────────────────────────────────────────────────────
+  const fmtEur = n => '€ ' + Math.round(n).toLocaleString('es-ES');
+  const today  = () => { const d=new Date(); return d.toLocaleDateString('es-ES',{day:'2-digit',month:'2-digit',year:'numeric'}); };
+  const addDays = d => { const dt=new Date(); dt.setDate(dt.getDate()+d); return dt.toLocaleDateString('es-ES',{day:'2-digit',month:'2-digit',year:'numeric'}); };
 
-  // ── TARIFA POR HORA ──────────────────────────────────────────────────────
-  function calcHourly() {
-    const income   = parseFloat(document.getElementById('income').value)    || 0;
-    const hwk      = parseFloat(document.getElementById('hoursWeek').value) || 1;
-    const vacWks   = parseFloat(document.getElementById('vacWeeks').value)  || 0;
-    const overhead = parseFloat(document.getElementById('overhead').value)  || 0;
+  const typeHints = {
+    'Identidad / Branding completo':'Estimado típico: 20–40 hs',
+    'Redes sociales (pack mensual)':'Estimado típico: 8–15 hs',
+    'Materiales de marketing':'Estimado típico: 4–10 hs',
+    'Soporte de marca / piezas sueltas':'Estimado típico: 2–6 hs',
+    'Otro':'Ingresá las horas que estimás'
+  };
 
-    const workWeeks    = 52 - vacWks;
-    const hoursYear    = hwk * workWeeks;
-    const hoursMonth   = hoursYear / 12;
-    const monthlyNeed  = income + overhead;
-    const rate         = hoursMonth > 0 ? monthlyNeed / hoursMonth : 0;
+  function updateTypeHint(){
+    const t = document.getElementById('projectType').value;
+    document.getElementById('typeHint').textContent = typeHints[t]||'';
+  }
 
-    document.getElementById('hourlyRate').textContent = fmt(rate);
-    document.getElementById('bk-hours').textContent   = Math.round(hoursYear) + ' hs';
-    document.getElementById('bk-hoursMonth').textContent = Math.round(hoursMonth) + ' hs';
-    document.getElementById('bk-need').textContent    = fmt(monthlyNeed);
-    document.getElementById('bk-rate').textContent    = fmt(rate) + '/hora';
+  // ── CALCULATION ───────────────────────────────────────────────────────
+  let state = {};
 
-    let ctx = '';
-    if (rate < 20)      ctx = '⚠️  Muy baja para el mercado — revisá tus números';
-    else if (rate < 40) ctx = 'Tarifa de entrada. Viable para empezar, con margen para crecer.';
-    else if (rate < 70) ctx = 'Tarifa competitiva para diseñadoras con experiencia.';
-    else if (rate < 120) ctx = 'Tarifa senior. Respaldada por experiencia y portfolio sólido.';
-    else                ctx = 'Tarifa especialista / estudio boutique.';
-    document.getElementById('hourlyContext').textContent = ctx;
+  function calcAll(){
+    // Hourly
+    const income   = parseFloat(document.getElementById('income').value)||0;
+    const hwk      = parseFloat(document.getElementById('hoursWeek').value)||1;
+    const vac      = parseFloat(document.getElementById('vacWeeks').value)||0;
+    const overhead = parseFloat(document.getElementById('overhead').value)||0;
+    const workWks  = 52 - vac;
+    const hrsYear  = hwk * workWks;
+    const hrsMo    = hrsYear / 12;
+    const need     = income + overhead;
+    const hRate    = hrsMo > 0 ? need / hrsMo : 0;
+
+    document.getElementById('rHourly').textContent = fmtEur(hRate);
+    document.getElementById('bHoursM').textContent  = Math.round(hrsMo)+' hs';
+    document.getElementById('bNeed').textContent    = fmtEur(need);
+    document.getElementById('bRate').textContent    = fmtEur(hRate)+'/hora';
+
+    let note='';
+    if(hRate<20)       note='⚠️  Muy baja para el mercado';
+    else if(hRate<40)  note='Tarifa de entrada — válida para empezar';
+    else if(hRate<70)  note='Tarifa competitiva para diseñadoras con experiencia';
+    else if(hRate<120) note='Tarifa senior — respaldada por portfolio sólido';
+    else               note='Tarifa especialista / estudio boutique';
+    document.getElementById('rHourlyNote').textContent = note;
 
     // Auto-fill project rate
-    if (rate > 0) document.getElementById('myRate').value = Math.round(rate);
-    calcProject();
-  }
+    if(hRate>0) document.getElementById('myRate').value = Math.round(hRate);
 
-  // ── PRESUPUESTO DE PROYECTO ──────────────────────────────────────────────
-  const hints = {
-    branding:   'Estimado: 20–40 hs para un proyecto de branding completo',
-    redes:      'Estimado: 8–15 hs para un pack de redes mensual',
-    marketing:  'Estimado: 4–10 hs según cantidad de piezas',
-    soporte:    'Estimado: 2–6 hs para piezas sueltas o adaptaciones',
-    otro:       'Ingresá las horas que estimás para tu proyecto'
-  };
+    // Project
+    const rate   = parseFloat(document.getElementById('myRate').value)||0;
+    const pHours = parseFloat(document.getElementById('projHours').value)||0;
+    const revs   = parseFloat(document.getElementById('revisions').value)||0;
+    const rush   = document.getElementById('rushToggle').checked;
+    const revHrs = revs;
+    const totHrs = pHours + revHrs;
+    const base   = totHrs * rate;
+    const rushAmt= rush ? base * 0.5 : 0;
+    const total  = base + rushAmt;
 
-  const marketRanges = {
-    branding:   'Branding completo (logo + manual): <strong>€ 800 – € 3.500</strong> según experiencia y alcance.',
-    redes:      'Pack de redes mensual: <strong>€ 200 – € 800</strong> según cantidad de piezas y plataformas.',
-    marketing:  'Materiales de marketing: <strong>€ 80 – € 500</strong> por pack según complejidad.',
-    soporte:    'Soporte de marca / piezas sueltas: <strong>€ 50 – € 300</strong> por pieza.',
-    otro:       ''
-  };
+    document.getElementById('rTotal').textContent    = fmtEur(total);
+    document.getElementById('bBase').textContent     = pHours+' hs';
+    document.getElementById('bRevs').textContent     = revHrs+' hs';
+    document.getElementById('bTotalH').textContent   = totHrs+' hs';
+    document.getElementById('bBaseCost').textContent = fmtEur(base);
+    document.getElementById('bFinal').textContent    = fmtEur(total);
+    document.getElementById('bRushRow').style.display = rush ? 'flex':'none';
+    document.getElementById('bRushAmt').textContent  = '+'+fmtEur(rushAmt);
+    document.getElementById('rushPill').classList.toggle('on',rush);
 
-  function calcProject() {
-    const rate     = parseFloat(document.getElementById('myRate').value)     || 0;
-    const hours    = parseFloat(document.getElementById('projHours').value)  || 0;
-    const revs     = parseFloat(document.getElementById('revisions').value)  || 0;
-    const rush     = document.getElementById('rushToggle').checked;
-    const type     = document.getElementById('projectType').value;
+    document.getElementById('rTotalNote').textContent =
+      totHrs+' hs totales · '+fmtEur(rate)+'/hora'+(rush?' · recargo rush aplicado':'');
 
-    document.getElementById('typeHint').textContent = hints[type] || '';
+    // Save state for document
+    state = { rate, pHours, revs, revHrs, totHrs, base, rushAmt, rush, total,
+              type: document.getElementById('projectType').value };
 
-    const revHours  = revs * 1;
-    const totalHrs  = hours + revHours;
-    const baseCost  = totalHrs * rate;
-    const rushCost  = rush ? baseCost * 0.5 : 0;
-    const total     = baseCost + rushCost;
-
-    document.getElementById('projTotal').textContent     = fmt(total);
-    document.getElementById('bk-baseHours').textContent  = hours + ' hs';
-    document.getElementById('bk-revHours').textContent   = revHours + ' hs';
-    document.getElementById('bk-totalHours').textContent = totalHrs + ' hs';
-    document.getElementById('bk-baseCost').textContent   = fmt(baseCost);
-    document.getElementById('bk-total').textContent      = fmt(total);
-
-    const rushRow = document.getElementById('rushRow');
-    if (rush) {
-      rushRow.style.display = 'flex';
-      document.getElementById('bk-rush').textContent = '+' + fmt(rushCost);
-    } else {
-      rushRow.style.display = 'none';
-    }
-
-    document.getElementById('rushBadge').classList.toggle('active', rush);
-
-    let ctx = '';
-    if (total === 0) ctx = 'Completá los datos para ver el presupuesto';
-    else ctx = `${totalHrs} hs totales · ${fmt(rate)}/hora · ${rush ? 'con recargo rush' : 'sin recargo'}`;
-    document.getElementById('projContext').textContent = ctx;
-
-    // Market range
-    const mrDiv  = document.getElementById('marketRange');
-    const mrText = document.getElementById('marketRangeText');
-    if (marketRanges[type]) {
-      mrDiv.style.display = 'block';
-      mrText.innerHTML    = marketRanges[type];
-    } else {
-      mrDiv.style.display = 'none';
+    // Update document if visible
+    if(document.getElementById('quote-wrap').classList.contains('visible')){
+      renderTable(); renderTotals();
     }
   }
 
-  // ── EMAIL FORM ────────────────────────────────────────────────────────────
-  function handleSubmit(e) {
-    e.preventDefault();
-    const toast = document.getElementById('toast');
-    toast.classList.add('show');
-    document.getElementById('emailInput').value = '';
-    setTimeout(() => toast.classList.remove('show'), 4000);
+  // ── LOGO ──────────────────────────────────────────────────────────────
+  function handleLogo(input){
+    if(!input.files||!input.files[0]) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = document.getElementById('logo-preview');
+      img.src = e.target.result;
+      img.style.display = 'block';
+      document.getElementById('logoUploadLabel').style.display = 'none';
+    };
+    reader.readAsDataURL(input.files[0]);
   }
 
-  // Init
-  calcHourly();
+  // ── GENERATE DOCUMENT ────────────────────────────────────────────────
+  function generateQuote(){
+    if(!state.total){ alert('Completá los datos del presupuesto primero.'); return; }
+
+    // Set dates
+    document.getElementById('quoteDate').textContent   = today();
+    document.getElementById('quoteExpiry').textContent = addDays(30);
+
+    // Set pre-filled project name if empty
+    const pName = document.getElementById('projNameDoc');
+    if(pName.textContent.trim()==='Nombre del proyecto' || !pName.textContent.trim())
+      pName.textContent = state.type;
+
+    // Set term rate ref
+    document.getElementById('termRateRef').textContent = fmtEur(state.rate);
+
+    renderTable();
+    renderTotals();
+    syncSig();
+
+    document.getElementById('quote-wrap').classList.add('visible');
+    setTimeout(()=>{ document.getElementById('quote-wrap').scrollIntoView({behavior:'smooth',block:'start'}); },100);
+  }
+
+  function renderTable(){
+    const s = state;
+    let rows = `
+      <tr>
+        <td>${s.type}<div class="td-sub">Trabajo de diseño base</div></td>
+        <td>${s.pHours}</td>
+        <td>${fmtEur(s.rate)}</td>
+        <td>${fmtEur(s.pHours * s.rate)}</td>
+      </tr>`;
+
+    if(s.revHrs>0) rows += `
+      <tr>
+        <td>Revisiones incluidas<div class="td-sub">${s.revs} revisión${s.revs!==1?'es':''} · estimado ${s.revHrs} hs</div></td>
+        <td>${s.revHrs}</td>
+        <td>${fmtEur(s.rate)}</td>
+        <td>${fmtEur(s.revHrs * s.rate)}</td>
+      </tr>`;
+
+    if(s.rush) rows += `
+      <tr class="rush-row">
+        <td>Recargo por urgencia<div class="td-sub">Rush fee (+50% sobre el total)</div></td>
+        <td>—</td>
+        <td>—</td>
+        <td>+${fmtEur(s.rushAmt)}</td>
+      </tr>`;
+
+    document.getElementById('quoteTableBody').innerHTML = rows;
+  }
+
+  function renderTotals(){
+    const s   = state;
+    const iva = document.getElementById('ivaCheck').checked;
+    const ivaRate = parseFloat(document.getElementById('ivaRate').textContent)||21;
+    const ivaAmt  = iva ? s.total * (ivaRate/100) : 0;
+    const grand   = s.total + ivaAmt;
+
+    let html = `<div class="tot-row"><span>Subtotal</span><span class="tv">${fmtEur(s.total)}</span></div>`;
+    if(iva) html += `<div class="tot-row"><span>IVA (${ivaRate}%)</span><span class="tv">${fmtEur(ivaAmt)}</span></div>`;
+    html += `<div class="tot-row grand"><span><strong>TOTAL</strong></span><span class="tv"><strong>${fmtEur(grand)}</strong></span></div>`;
+    document.getElementById('totalsTable').innerHTML = html;
+  }
+
+  // Sync sender name to signature
+  function syncSig(){
+    const name = document.getElementById('senderName').textContent.trim();
+    document.getElementById('sigName').textContent = name || '—';
+  }
+  document.addEventListener('input', e => {
+    if(e.target.id === 'senderName') syncSig();
+    if(e.target.id === 'ivaRate') renderTotals();
+  });
+
+  function resetQuote(){
+    document.getElementById('quote-wrap').classList.remove('visible');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  // ── INIT ──────────────────────────────────────────────────────────────
+  updateTypeHint();
+  calcAll();
 </script>
 </body>
 </html>
