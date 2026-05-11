@@ -137,6 +137,43 @@
       font-family:'Barlow Condensed',sans-serif;font-weight:900;margin-bottom:.5rem;text-transform:uppercase}
     .port-item[data-cat].hidden{display:none}
 
+    /* RECURSOS — EMAIL GATE */
+    #recursos-grid-wrap{position:relative}
+    #recursos-grid-wrap.locked .recursos-grid{
+      filter:blur(7px);pointer-events:none;user-select:none;
+      transition:filter .4s ease}
+    #recursos-gate{
+      position:absolute;inset:0;
+      display:flex;align-items:center;justify-content:center;
+      z-index:10;padding:1rem}
+    #recursos-gate.hidden{display:none}
+    .gate-card{
+      background:var(--dark);color:#fff;
+      padding:2.5rem 2rem;max-width:460px;width:100%;
+      border:3px solid var(--dark);box-shadow:8px 8px 0 0 #000;
+      text-align:center}
+    .gate-card .section-label{color:var(--lime);margin-bottom:.75rem}
+    .gate-card h3{font-family:'Calistoga',serif;font-weight:400;
+      font-size:clamp(1.5rem,4vw,2rem);line-height:1.15;margin:0 0 .75rem}
+    .gate-card p{font-size:.95rem;color:rgba(255,255,255,.75);
+      line-height:1.6;margin:0 0 1.5rem}
+    .gate-form{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center}
+    .gate-form input[type=email]{
+      flex:1;min-width:200px;font-family:'Nunito',sans-serif;font-size:1rem;
+      border:3px solid rgba(255,255,255,.3);padding:13px 16px;outline:none;
+      background:rgba(255,255,255,.1);color:#fff}
+    .gate-form input[type=email]::placeholder{color:rgba(255,255,255,.45)}
+    .gate-form input[type=email]:focus{border-color:var(--lime)}
+    .gate-form button{
+      font-family:'Poppins',sans-serif;font-weight:700;font-size:.85rem;
+      letter-spacing:.08em;text-transform:uppercase;
+      background:var(--lime);color:var(--dark);
+      border:3px solid var(--dark);padding:13px 22px;cursor:pointer;
+      transition:transform .1s,box-shadow .1s;
+      box-shadow:4px 4px 0 0 #000}
+    .gate-form button:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 0 #000}
+    .gate-note{font-size:.75rem;color:rgba(255,255,255,.4);margin-top:.9rem}
+
     /* RECURSOS */
     #recursos{background:var(--lime);padding:6rem 4rem}
     .recursos-inner{max-width:900px;margin:0 auto;display:grid;
@@ -566,8 +603,25 @@
       <p style="font-size:1rem;color:var(--blue);opacity:.8;max-width:380px;line-height:1.6;margin:0">Herramientas reales que podés usar desde hoy. Sin trucos, sin letra chica — solo valor puro.</p>
     </div>
 
-    <!-- GRID DE RECURSOS -->
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.2rem;margin-bottom:4rem">
+    <!-- GRID DE RECURSOS (con email gate) -->
+    <div id="recursos-grid-wrap" class="locked">
+
+      <!-- GATE OVERLAY -->
+      <div id="recursos-gate">
+        <div class="gate-card">
+          <div class="section-label" style="font-family:'Rock Salt',cursive;font-size:.65rem">Para vos, gratis</div>
+          <h3>Accedé a los recursos gratuitos</h3>
+          <p>Dejá tu mail y desbloqueá al instante las 5 herramientas — sin spam, sin letra chica.</p>
+          <form class="gate-form" id="gateForm">
+            <input type="email" id="gateEmail" placeholder="Tu email aquí..." required/>
+            <button type="submit">¡Acceder gratis!</button>
+          </form>
+          <div class="gate-note">Sin spam. Podés darte de baja cuando quieras.</div>
+        </div>
+      </div>
+
+      <!-- tarjetas -->
+      <div class="recursos-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.2rem;margin-bottom:4rem">
 
       <!-- Auditoría de marca -->
       <a href="batifondo-leadmagnets/auditoria-de-marca.html" target="_blank" style="text-decoration:none;display:flex;flex-direction:column;background:var(--blue);color:#fff;padding:2rem;transition:transform .15s,box-shadow .15s;box-shadow:6px 6px 0 0 var(--dark)" onmouseover="this.style.transform='translate(-3px,-3px)';this.style.boxShadow='9px 9px 0 0 #1e2a6e'" onmouseout="this.style.transform='';this.style.boxShadow='6px 6px 0 0 #1e2a6e'">
@@ -658,7 +712,8 @@
         <div style="font-family:monospace;font-weight:700;font-size:.72rem;letter-spacing:1px;text-transform:uppercase;background:var(--hot-pink);color:#fff;padding:.55rem 1rem;display:inline-block;align-self:flex-start;border:2px solid var(--hot-pink)">[ ABRIR CALCULADORA ]</div>
       </a>
 
-    </div>
+      </div><!-- /recursos-grid -->
+    </div><!-- /recursos-grid-wrap -->
 
     <!-- CAPTACIÓN EMAIL -->
     <div style="background:var(--blue);padding:2.5rem;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:center;flex-wrap:wrap">
@@ -957,11 +1012,45 @@
     setTimeout(() => toast.classList.remove('show'), 3500);
   });
 
-  // Resource form
+  // ── Email gate for recursos ──────────────────────────────────────────────
+  function unlockRecursos(animate) {
+    const wrap = document.getElementById('recursos-grid-wrap');
+    const gate = document.getElementById('recursos-gate');
+    wrap.classList.remove('locked');
+    gate.classList.add('hidden');
+    if (animate) {
+      const toast = document.getElementById('toast');
+      toast.textContent = '¡Listo! Ya tenés acceso a todos los recursos.';
+      toast.classList.add('show');
+      setTimeout(() => { toast.classList.remove('show'); toast.textContent = '¡Mensaje enviado! Te respondo pronto.'; }, 3500);
+    }
+  }
+
+  // Check localStorage on load
+  if (localStorage.getItem('batifondo_unlocked') === '1') {
+    unlockRecursos(false);
+  }
+
+  // Gate form submit
+  document.getElementById('gateForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('gateEmail').value.trim();
+    if (!email) return;
+    localStorage.setItem('batifondo_unlocked', '1');
+    unlockRecursos(true);
+    // Send email silently to formsubmit.co
+    fetch('https://formsubmit.co/ajax/batifondo.design@gmail.com', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+      body: JSON.stringify({email: email, _subject: 'Nuevo acceso a recursos gratuitos', _captcha: 'false'})
+    }).catch(() => {});
+  });
+
+  // Newsletter form (bottom panel — still works independently)
   document.getElementById('resourceForm').addEventListener('submit', e => {
     e.preventDefault();
     const toast = document.getElementById('toast');
-    toast.textContent = '¡Genial! En breve te llega el pack a tu mail.';
+    toast.textContent = '¡Genial! Te aviso cuando haya recursos nuevos.';
     toast.classList.add('show');
     e.target.reset();
     setTimeout(() => { toast.classList.remove('show'); toast.textContent = '¡Mensaje enviado! Te respondo pronto.'; }, 3500);
