@@ -1039,10 +1039,10 @@
     localStorage.setItem('batifondo_unlocked', '1');
     unlockRecursos(true);
     // Send email silently to formsubmit.co
-    fetch('https://formsubmit.co/ajax/batifondo.design@gmail.com', {
+    fetch('https://formsubmit.co/ajax/batifondostudio@gmail.com', {
       method: 'POST',
       headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
-      body: JSON.stringify({email: email, _subject: 'Nuevo acceso a recursos gratuitos', _captcha: 'false'})
+      body: JSON.stringify({email: email, _subject: 'Nuevo acceso a recursos gratuitos — Batifondo', _replyto: email, _captcha: 'false'})
     }).catch(() => {});
   });
 
