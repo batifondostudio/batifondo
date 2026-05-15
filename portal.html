@@ -64,7 +64,31 @@
     font-family: 'Calistoga', serif;
     color: var(--white);
     font-size: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .auth-tabs {
+    display: flex;
+    margin-bottom: 1.5rem;
+    border: 2px solid rgba(255,255,255,.2);
+  }
+  .auth-tab {
+    flex: 1;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: .8rem;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: rgba(255,255,255,.45);
+    transition: all .2s;
+  }
+  .auth-tab.active {
+    background: var(--lime);
+    color: var(--dark);
   }
 
   .form-group {
@@ -995,17 +1019,47 @@
       <img id="login-logo-img" src="" alt="Batifondo" style="height:52px;width:auto">
     </div>
     <div class="login-rock-label">Portal de clientes</div>
-    <h1>Bienvenida de nuevo</h1>
-    <div class="error-msg" id="login-error">Contraseña incorrecta. Intentá de nuevo.</div>
-    <div class="form-group">
-      <label for="login-email">Email</label>
-      <input type="email" id="login-email" placeholder="hola@tuempresa.com">
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Ingresar</button>
+      <button class="auth-tab" id="tab-register" onclick="switchAuthTab('register')">Registrarse</button>
     </div>
-    <div class="form-group">
-      <label for="login-password">Contraseña</label>
-      <input type="password" id="login-password" placeholder="••••••••">
+    <!-- Login -->
+    <div id="login-form-wrap">
+      <h1>Bienvenida de nuevo</h1>
+      <div class="error-msg" id="login-error">Contraseña incorrecta. Intentá de nuevo.</div>
+      <div class="form-group">
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" placeholder="hola@tuempresa.com">
+      </div>
+      <div class="form-group">
+        <label for="login-password">Contraseña</label>
+        <input type="password" id="login-password" placeholder="••••••••">
+      </div>
+      <button class="btn btn-lime btn-full" onclick="handleLogin()">Ingresar</button>
     </div>
-    <button class="btn btn-lime btn-full" onclick="handleLogin()">Ingresar</button>
+    <!-- Registro -->
+    <div id="register-form-wrap" style="display:none">
+      <h1>Creá tu cuenta</h1>
+      <div class="error-msg" id="register-error">Completá todos los campos.</div>
+      <div class="form-group">
+        <label for="reg-name">Nombre completo</label>
+        <input type="text" id="reg-name" placeholder="Tu nombre">
+      </div>
+      <div class="form-group">
+        <label for="reg-email">Email</label>
+        <input type="email" id="reg-email" placeholder="hola@tuempresa.com">
+      </div>
+      <div class="form-group">
+        <label for="reg-password">Contraseña</label>
+        <input type="password" id="reg-password" placeholder="••••••••">
+      </div>
+      <div class="form-group">
+        <label for="reg-confirm">Confirmar contraseña</label>
+        <input type="password" id="reg-confirm" placeholder="Repetí tu contraseña">
+      </div>
+      <button class="btn btn-lime btn-full" onclick="handleRegister()">Crear cuenta</button>
+      <p style="color:rgba(255,255,255,.4);font-size:.78rem;margin-top:1.2rem;line-height:1.5">Tu solicitud será revisada y recibirás acceso en 24 hs.</p>
+    </div>
   </div>
 </div>
 
@@ -1396,17 +1450,45 @@
 })();
 
 // ===== AUTH =====
+function switchAuthTab(tab) {
+  document.getElementById('login-form-wrap').style.display = tab === 'login' ? 'block' : 'none';
+  document.getElementById('register-form-wrap').style.display = tab === 'register' ? 'block' : 'none';
+  document.getElementById('tab-login').classList.toggle('active', tab === 'login');
+  document.getElementById('tab-register').classList.toggle('active', tab === 'register');
+}
+
+function handleRegister() {
+  var name = document.getElementById('reg-name').value.trim();
+  var email = document.getElementById('reg-email').value.trim();
+  var password = document.getElementById('reg-password').value;
+  var confirm = document.getElementById('reg-confirm').value;
+  var errorEl = document.getElementById('register-error');
+  if (!name || !email || !password || !confirm) {
+    errorEl.textContent = 'Completá todos los campos.';
+    errorEl.style.display = 'block'; return;
+  }
+  if (password !== confirm) {
+    errorEl.textContent = 'Las contraseñas no coinciden.';
+    errorEl.style.display = 'block'; return;
+  }
+  if (password.length < 6) {
+    errorEl.textContent = 'La contraseña debe tener al menos 6 caracteres.';
+    errorEl.style.display = 'block'; return;
+  }
+  errorEl.style.display = 'none';
+  localStorage.setItem('batifondo_portal_user', email);
+  localStorage.setItem('batifondo_portal_name', name);
+  showDashboard(email);
+}
+
 function handleLogin() {
   var email = document.getElementById('login-email').value.trim();
   var password = document.getElementById('login-password').value;
   var errorEl = document.getElementById('login-error');
-
   if (!email) {
     errorEl.textContent = 'Por favor ingresá tu email.';
-    errorEl.style.display = 'block';
-    return;
+    errorEl.style.display = 'block'; return;
   }
-
   if (password === 'batifondo2024') {
     errorEl.style.display = 'none';
     localStorage.setItem('batifondo_portal_user', email);
@@ -1422,6 +1504,15 @@ function handleLogin() {
 document.getElementById('login-password').addEventListener('keydown', function(e) {
   if (e.key === 'Enter') handleLogin();
 });
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && document.getElementById('register-form-wrap').style.display !== 'none') {
+    handleRegister();
+  }
+});
+// Handle ?modo=registro URL param
+if (window.location.search.includes('modo=registro')) {
+  switchAuthTab('register');
+}
 
 document.getElementById('login-email').addEventListener('keydown', function(e) {
   if (e.key === 'Enter') document.getElementById('login-password').focus();
