@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+<script>
+  (function(){
+    if(localStorage.getItem('batifondo_unlocked')!=='1'){
+      window.location.replace('../index.html#recursos');
+    }
+  })();
+</script>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Psicología del Color · Guía Batifondo</title>
