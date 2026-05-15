@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tienda · Batifondo</title>
+  <meta name="description" content="Suscripciones de diseño, servicios por encargo y recursos digitales. Todo lo que tu marca necesita."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Calistoga&family=Nunito&family=Poppins:wght@700&family=Rock+Salt:ital,wght@0,400;0,700;0,800;1,400;1,700&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --lime:#c8e000;--blue:#4d6af5;--hot-pink:#ec4899;
+      --purple:#5569f5;--dark:#1e2a6e;--white:#fff;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:'Nunito',sans-serif;overflow-x:hidden;color:var(--dark)}
+
+    /* ── NAV ── */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--lime);
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0 2rem;height:68px;box-shadow:0 2px 12px rgba(0,0,0,.1)}
+    .logo img{height:60px;width:auto;display:block}
+    .nav-right{display:flex;align-items:center;gap:2rem}
+    nav ul{list-style:none;display:flex;gap:2rem}
+    nav ul a{font-family:'Barlow Condensed',sans-serif;font-weight:400;font-size:1rem;
+      color:var(--blue);text-decoration:none;letter-spacing:.5px;transition:all .2s}
+    nav ul a:hover,nav ul a.active{font-weight:700}
+    .cart-btn{position:relative;background:var(--blue);color:#fff;border:none;
+      width:44px;height:44px;cursor:pointer;font-size:1.2rem;
+      display:flex;align-items:center;justify-content:center;
+      transition:transform .15s,box-shadow .15s;
+      box-shadow:3px 3px 0 0 var(--dark)}
+    .cart-btn:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 0 var(--dark)}
+    .cart-count{position:absolute;top:-6px;right:-6px;background:var(--hot-pink);
+      color:#fff;font-family:'Poppins',sans-serif;font-weight:700;font-size:.65rem;
+      width:18px;height:18px;border-radius:50%;display:flex;align-items:center;
+      justify-content:center;display:none}
+    .cart-count.visible{display:flex}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;
+      background:none;border:none;padding:4px}
+    .hamburger span{display:block;width:26px;height:3px;background:var(--blue)}
+
+    /* ── LABELS / TITLES ── */
+    .section-label{font-family:'Rock Salt',cursive;font-weight:400;font-size:.85rem;
+      letter-spacing:4px;color:var(--hot-pink);text-transform:uppercase;margin-bottom:1rem}
+    .section-h2{font-family:'Calistoga',serif;font-weight:400;
+      font-size:clamp(2rem,5vw,3.5rem);line-height:1.1;margin-bottom:.5rem}
+    .section-sub{font-size:1rem;opacity:.75;line-height:1.6;max-width:480px}
+
+    /* ── BUTTONS ── */
+    .btn-primary{font-family:'Poppins',sans-serif;font-weight:700;font-size:.9rem;
+      letter-spacing:1px;background:var(--blue);color:#fff;border:none;
+      padding:14px 28px;cursor:pointer;text-transform:uppercase;text-decoration:none;
+      display:inline-block;transition:transform .15s,box-shadow .15s;
+      box-shadow:4px 4px 0 0 var(--dark)}
+    .btn-primary:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 0 var(--dark)}
+    .btn-lime{background:var(--lime);color:var(--dark);box-shadow:4px 4px 0 0 var(--dark)}
+    .btn-lime:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 0 var(--dark)}
+    .btn-outline{font-family:'Poppins',sans-serif;font-weight:700;font-size:.9rem;
+      letter-spacing:1px;background:transparent;color:var(--blue);
+      border:3px solid var(--blue);padding:12px 26px;cursor:pointer;
+      text-transform:uppercase;text-decoration:none;display:inline-block;
+      transition:all .15s}
+    .btn-outline:hover{background:var(--blue);color:#fff}
+    .btn-ghost{font-family:'Poppins',sans-serif;font-weight:700;font-size:.9rem;
+      letter-spacing:1px;background:transparent;color:#fff;
+      border:3px solid rgba(255,255,255,.5);padding:12px 26px;cursor:pointer;
+      text-transform:uppercase;text-decoration:none;display:inline-block;
+      transition:all .15s}
+    .btn-ghost:hover{background:rgba(255,255,255,.15);border-color:#fff}
+
+    /* ── MARQUEE ── */
+    .marquee-wrap{background:var(--blue);overflow:hidden;padding:.9rem 0}
+    .marquee-track{display:inline-flex;animation:marquee 22s linear infinite;white-space:nowrap}
+    .marquee-track span{font-family:'Poppins',sans-serif;font-weight:700;font-size:1rem;
+      color:var(--lime);letter-spacing:3px;text-transform:uppercase;padding:0 2.5rem}
+    @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+    /* ── SHOP HERO ── */
+    .shop-hero{background:var(--dark);padding:140px 4rem 6rem;min-height:50vh;
+      display:flex;align-items:center;position:relative;overflow:hidden}
+    .shop-hero .section-label{color:var(--lime)}
+    .shop-hero .section-h2{color:#fff;font-size:clamp(3rem,7vw,5.5rem)}
+    .shop-hero em{color:var(--lime);font-style:normal}
+    .shop-hero .section-sub{color:rgba(255,255,255,.7);margin-top:1rem}
+    .hero-deco-shop{position:absolute;right:-100px;top:50%;transform:translateY(-50%);
+      width:500px;height:500px;border:3px solid rgba(200,224,0,.15);border-radius:50%}
+    .hero-deco-shop2{position:absolute;right:-60px;top:50%;transform:translateY(-50%);
+      width:350px;height:350px;border:3px solid rgba(200,224,0,.08);border-radius:50%}
+    .shop-tabs{display:flex;gap:1rem;flex-wrap:wrap;margin-top:2.5rem}
+    .shop-tab{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.9rem;
+      letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.6);
+      text-decoration:none;border-bottom:2px solid transparent;padding-bottom:4px;
+      transition:all .2s}
+    .shop-tab:hover,.shop-tab.active{color:var(--lime);border-color:var(--lime)}
+
+    /* ── SUSCRIPCIONES ── */
+    #suscripciones{background:linear-gradient(180deg,var(--purple) 0%,var(--hot-pink) 100%);
+      padding:6rem 4rem}
+    #suscripciones .section-h2{color:#fff}
+    #suscripciones .section-sub{color:rgba(255,255,255,.8)}
+    .plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;
+      max-width:1100px;margin:3rem auto 0}
+    .plan-card-shop{background:#fff;display:flex;flex-direction:column;
+      box-shadow:6px 6px 0 0 var(--dark);transition:transform .15s,box-shadow .15s}
+    .plan-card-shop:hover{transform:translate(-3px,-3px);box-shadow:9px 9px 0 0 var(--dark)}
+    .plan-card-shop.featured{transform:scale(1.04);box-shadow:6px 6px 0 0 var(--dark)}
+    .plan-card-shop.featured:hover{transform:scale(1.04) translate(-3px,-3px)}
+    .plan-top-shop{background:var(--hot-pink);padding:2rem 1.5rem 1.5rem;color:#fff}
+    .plan-card-shop.featured .plan-top-shop{background:var(--blue)}
+    .plan-badge-shop{font-family:'Barlow Condensed',sans-serif;font-weight:900;
+      font-size:.7rem;letter-spacing:3px;background:var(--lime);color:var(--blue);
+      padding:4px 10px;display:inline-block;margin-bottom:.8rem;text-transform:uppercase}
+    .plan-name-shop{font-family:'Calistoga',serif;font-weight:400;font-size:2rem;margin-bottom:.3rem}
+    .plan-sub-shop{font-size:.9rem;opacity:.85;font-weight:700}
+    .plan-price-shop{margin:.8rem 0 .3rem}
+    .price-old{display:block;font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;
+      color:rgba(255,255,255,.5);text-decoration:line-through;line-height:1.2}
+    .price-new{display:block;font-family:'Calistoga',serif;font-size:2.4rem;
+      line-height:1;color:var(--blue)}
+    .plan-card-shop.featured .price-new{color:var(--lime)}
+    .price-per{font-family:'Barlow Condensed',sans-serif;font-size:1rem}
+    .price-note{font-size:.7rem;opacity:.6;font-family:'Barlow Condensed',sans-serif;
+      margin-top:.2rem;display:block}
+    .plan-body-shop{padding:1.5rem;flex:1}
+    .plan-body-shop ul{list-style:none}
+    .plan-body-shop li{padding:.5rem 0;border-bottom:1px solid #f0f0f0;
+      font-size:.92rem;color:var(--dark);display:flex;gap:.6rem;align-items:flex-start}
+    .plan-body-shop li::before{content:'★';color:var(--blue);flex-shrink:0;font-size:.8rem}
+    .plan-footer-shop{padding:1.2rem 1.5rem}
+    .subscribe-btn{font-family:'Poppins',sans-serif;font-weight:700;font-size:.95rem;
+      letter-spacing:1px;background:var(--blue);color:#fff;border:none;padding:14px;
+      cursor:pointer;width:100%;text-transform:uppercase;transition:all .2s;
+      box-shadow:3px 3px 0 0 var(--dark)}
+    .subscribe-btn:hover{background:var(--dark);transform:translateY(-2px)}
+    .plan-note-shop{text-align:center;color:rgba(255,255,255,.75);font-size:.9rem;
+      margin-top:1.5rem;max-width:600px;margin-left:auto;margin-right:auto}
+
+    /* ── SERVICIOS POR ENCARGO ── */
+    #servicios-encargo{background:#fff;padding:6rem 4rem}
+    .services-shop-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;
+      max-width:1100px;margin:3rem auto 0}
+    .service-shop-card{border:3px solid var(--dark);padding:2.5rem;
+      display:flex;flex-direction:column;gap:1rem;
+      transition:transform .15s,box-shadow .15s;
+      box-shadow:6px 6px 0 0 var(--dark)}
+    .service-shop-card:hover{transform:translate(-3px,-3px);box-shadow:9px 9px 0 0 var(--dark)}
+    .service-icon-shop{font-size:2.5rem;line-height:1}
+    .service-label-shop{font-family:'Barlow Condensed',sans-serif;font-weight:900;
+      font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;
+      color:var(--hot-pink);margin-bottom:.25rem}
+    .service-name-shop{font-family:'Calistoga',serif;font-weight:400;font-size:1.6rem;
+      color:var(--dark);line-height:1.1}
+    .service-desc-shop{font-size:.95rem;color:#555;line-height:1.7;flex:1}
+    .service-includes{list-style:none;margin:.5rem 0 1.5rem;display:flex;flex-direction:column;gap:.3rem}
+    .service-includes li{font-size:.88rem;color:#666;padding-left:1.2rem;position:relative}
+    .service-includes li::before{content:'→';position:absolute;left:0;color:var(--blue)}
+    .service-price-note{font-family:'Barlow Condensed',sans-serif;font-weight:700;
+      font-size:.85rem;letter-spacing:.05em;color:var(--blue);text-transform:uppercase}
+
+    /* ── RECURSOS DIGITALES ── */
+    #recursos-digitales{background:var(--lime);padding:6rem 4rem}
+    #recursos-digitales .section-h2{color:var(--dark)}
+    #recursos-digitales .section-sub{color:var(--dark);opacity:.7}
+    .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+      gap:1.5rem;max-width:1100px;margin:3rem auto 0}
+    .product-card{background:#fff;display:flex;flex-direction:column;
+      border:3px solid var(--dark);
+      box-shadow:6px 6px 0 0 var(--dark);
+      transition:transform .15s,box-shadow .15s;overflow:hidden}
+    .product-card:hover{transform:translate(-3px,-3px);box-shadow:9px 9px 0 0 var(--dark)}
+    .product-thumb{height:160px;display:flex;align-items:center;justify-content:center;
+      font-size:3.5rem;position:relative;overflow:hidden}
+    .product-soon{position:absolute;top:12px;right:12px;
+      background:var(--dark);color:var(--lime);
+      font-family:'Barlow Condensed',sans-serif;font-weight:900;
+      font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;padding:4px 10px}
+    .product-body{padding:1.5rem;flex:1;display:flex;flex-direction:column}
+    .product-cat{font-family:'Barlow Condensed',sans-serif;font-weight:900;
+      font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;
+      color:var(--hot-pink);margin-bottom:.4rem}
+    .product-name{font-family:'Calistoga',serif;font-weight:400;font-size:1.2rem;
+      color:var(--dark);line-height:1.2;margin-bottom:.6rem}
+    .product-desc{font-size:.88rem;color:#555;line-height:1.6;flex:1;margin-bottom:1.2rem}
+    .product-footer{display:flex;align-items:center;justify-content:space-between;gap:.8rem;
+      border-top:2px solid #f0f0f0;padding-top:1rem;margin-top:auto}
+    .product-price{font-family:'Calistoga',serif;font-size:1.5rem;color:var(--dark)}
+    .product-price .currency{font-size:1rem;vertical-align:top;margin-top:.2rem;display:inline-block}
+    .add-to-cart-btn{font-family:'Poppins',sans-serif;font-weight:700;font-size:.75rem;
+      letter-spacing:.08em;text-transform:uppercase;background:var(--blue);color:#fff;
+      border:none;padding:10px 16px;cursor:pointer;
+      box-shadow:3px 3px 0 0 var(--dark);transition:transform .1s,box-shadow .1s}
+    .add-to-cart-btn:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 0 var(--dark)}
+    .add-to-cart-btn:disabled{background:#ccc;box-shadow:3px 3px 0 0 #999;cursor:not-allowed;
+      transform:none}
+    .add-to-cart-btn.added{background:var(--hot-pink)}
+
+    /* ── CART PANEL ── */
+    #cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;
+      opacity:0;pointer-events:none;transition:opacity .3s}
+    #cart-overlay.open{opacity:1;pointer-events:all}
+    #cart-panel{position:fixed;top:0;right:0;bottom:0;width:400px;max-width:100vw;
+      background:var(--dark);z-index:201;
+      transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);
+      display:flex;flex-direction:column;overflow:hidden}
+    #cart-panel.open{transform:translateX(0)}
+    .cart-header{padding:1.5rem;border-bottom:2px solid rgba(255,255,255,.15);
+      display:flex;align-items:center;justify-content:space-between}
+    .cart-header h2{font-family:'Calistoga',serif;font-weight:400;font-size:1.6rem;color:#fff}
+    .cart-close{background:none;border:none;color:rgba(255,255,255,.6);
+      font-size:1.5rem;cursor:pointer;transition:color .2s;line-height:1}
+    .cart-close:hover{color:#fff}
+    .cart-items{flex:1;overflow-y:auto;padding:1.5rem}
+    .cart-empty{text-align:center;color:rgba(255,255,255,.4);padding:3rem 1rem}
+    .cart-empty .empty-icon{font-size:3rem;margin-bottom:1rem}
+    .cart-empty p{font-size:.95rem;line-height:1.6}
+    .cart-item{display:flex;gap:1rem;align-items:flex-start;
+      padding:1rem 0;border-bottom:1px solid rgba(255,255,255,.1)}
+    .cart-item-icon{width:52px;height:52px;background:rgba(255,255,255,.1);
+      display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+    .cart-item-info{flex:1}
+    .cart-item-name{font-family:'Calistoga',serif;font-weight:400;color:#fff;
+      font-size:1rem;line-height:1.2;margin-bottom:.25rem}
+    .cart-item-type{font-family:'Barlow Condensed',sans-serif;font-weight:700;
+      font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;
+      color:var(--lime);margin-bottom:.3rem}
+    .cart-item-price{font-family:'Barlow Condensed',sans-serif;font-weight:700;
+      font-size:1rem;color:rgba(255,255,255,.8)}
+    .cart-item-remove{background:none;border:none;color:rgba(255,255,255,.3);
+      cursor:pointer;font-size:1.1rem;padding:4px;transition:color .2s;margin-top:2px}
+    .cart-item-remove:hover{color:var(--hot-pink)}
+    .cart-footer{padding:1.5rem;border-top:2px solid rgba(255,255,255,.15)}
+    .cart-total{display:flex;justify-content:space-between;align-items:center;
+      margin-bottom:1.2rem}
+    .cart-total-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;
+      font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;
+      color:rgba(255,255,255,.6)}
+    .cart-total-amount{font-family:'Calistoga',serif;font-size:2rem;color:#fff}
+    .checkout-btn{font-family:'Poppins',sans-serif;font-weight:700;font-size:1rem;
+      letter-spacing:1px;text-transform:uppercase;background:var(--lime);
+      color:var(--dark);border:3px solid var(--dark);padding:16px;
+      cursor:pointer;width:100%;
+      box-shadow:4px 4px 0 0 #000;transition:transform .1s,box-shadow .1s}
+    .checkout-btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 0 #000}
+    .cart-note{font-size:.75rem;color:rgba(255,255,255,.35);
+      text-align:center;margin-top:.8rem;line-height:1.5}
+
+    /* ── TOAST ── */
+    .toast{display:none;position:fixed;bottom:2rem;left:50%;
+      transform:translateX(-50%);background:var(--blue);color:#fff;
+      font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1rem;
+      letter-spacing:1px;padding:1rem 2rem;border-left:6px solid var(--lime);z-index:999}
+    .toast.show{display:block}
+
+    /* ── FOOTER ── */
+    footer{background:var(--blue);color:#fff;text-align:center;
+      padding:2rem;font-size:.9rem;font-weight:700;letter-spacing:1px}
+    footer span{color:var(--lime)}
+    footer a{color:rgba(255,255,255,.6);text-decoration:none;margin:0 .5rem}
+    footer a:hover{color:var(--lime)}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:900px){
+      .hamburger{display:flex}
+      nav ul{display:none;flex-direction:column;position:absolute;top:68px;
+        left:0;right:0;background:var(--lime);padding:1.5rem 2rem;gap:1.2rem;
+        border-top:3px solid var(--blue)}
+      nav ul.open{display:flex}
+      .plans-grid,.services-shop-grid{grid-template-columns:1fr;max-width:420px;margin-left:auto;margin-right:auto}
+      .plan-card-shop.featured{transform:none}
+      .shop-hero,#suscripciones,#servicios-encargo,#recursos-digitales{padding-left:1.5rem;padding-right:1.5rem}
+      #cart-panel{width:100vw}
+    }
+    @media(max-width:540px){
+      .products-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo">
+    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='40' viewBox='0 0 120 40'%3E%3Ctext y='30' font-family='serif' font-size='28' font-weight='bold' fill='%231e2a6e'%3Ebatifondo%3C/text%3E%3C/svg%3E" alt="Batifondo"/>
+  </a>
+  <div class="nav-right">
+    <button class="hamburger" id="hamburger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+    <ul id="nav-links">
+      <li><a href="index.html#como-funciona">Cómo funciona</a></li>
+      <li><a href="index.html#servicios">Servicios</a></li>
+      <li><a href="index.html#portfolio">Portfolio</a></li>
+      <li><a href="tienda.html" class="active">Tienda</a></li>
+      <li><a href="index.html#contacto">Contacto</a></li>
+    </ul>
+    <button class="cart-btn" id="cartBtn" aria-label="Carrito">
+      🛒
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap" style="margin-top:68px" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Branding</span><span>·</span><span>Templates</span><span>·</span>
+    <span>Identidad Visual</span><span>·</span><span>Recursos</span><span>·</span>
+    <span>Suscripciones</span><span>·</span><span>Batifondo</span><span>·</span>
+    <span>Branding</span><span>·</span><span>Templates</span><span>·</span>
+    <span>Identidad Visual</span><span>·</span><span>Recursos</span><span>·</span>
+    <span>Suscripciones</span><span>·</span><span>Batifondo</span><span>·</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="shop-hero">
+  <div>
+    <div class="section-label">Tienda</div>
+    <h1 class="section-h2">Todo lo que<br><em>tu marca necesita</em></h1>
+    <p class="section-sub">Suscripciones mensuales, servicios por encargo y recursos digitales para hacer crecer tu marca.</p>
+    <div class="shop-tabs">
+      <a href="#suscripciones" class="shop-tab">Suscripciones</a>
+      <a href="#servicios-encargo" class="shop-tab">Servicios por encargo</a>
+      <a href="#recursos-digitales" class="shop-tab">Recursos digitales</a>
+    </div>
+  </div>
+  <div class="hero-deco-shop"></div>
+  <div class="hero-deco-shop2"></div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- SUSCRIPCIONES -->
+<!-- ════════════════════════════════════════════════════════ -->
+<section id="suscripciones">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="section-label">Suscripciones</div>
+    <h2 class="section-h2" style="color:#fff">Diseño constante,<br>sin sorpresas</h2>
+    <p class="section-sub" style="color:rgba(255,255,255,.8)">Elegís tu plan, me contás lo que necesitás, y en 48 hs tenés tu primer diseño. Pausar o cancelar cuando quieras.</p>
+
+    <div class="plans-grid">
+
+      <!-- Plan Esencial -->
+      <div class="plan-card-shop">
+        <div class="plan-top-shop">
+          <div class="plan-name-shop">Esencial</div>
+          <div class="plan-sub-shop">Ideal para arrancar</div>
+          <div class="plan-price-shop">
+            <span class="price-old">€300/mes</span>
+            <span class="price-new">€199<span class="price-per">/mes</span></span>
+            <span class="price-note">Precio de lanzamiento</span>
+          </div>
+        </div>
+        <div class="plan-body-shop">
+          <ul>
+            <li>1 solicitud activa a la vez</li>
+            <li>Entrega en 72 hs</li>
+            <li>2 revisiones por proyecto</li>
+            <li>Branding + materiales simples</li>
+            <li>Archivos en PDF y PNG</li>
+            <li>Comunicación por email</li>
+            <li>Pausar o cancelar cuando quieras</li>
+          </ul>
+        </div>
+        <div class="plan-footer-shop">
+          <button class="subscribe-btn" onclick="handleSubscribe('Esencial','199')">
+            Suscribirme al Esencial
+          </button>
+        </div>
+      </div>
+
+      <!-- Plan Profesional (featured) -->
+      <div class="plan-card-shop featured">
+        <div class="plan-top-shop">
+          <div class="plan-badge-shop">Más elegido</div>
+          <div class="plan-name-shop">Profesional</div>
+          <div class="plan-sub-shop">Para marcas en crecimiento</div>
+          <div class="plan-price-shop">
+            <span class="price-new">€399<span class="price-per">/mes</span></span>
+          </div>
+        </div>
+        <div class="plan-body-shop">
+          <ul>
+            <li>2 solicitudes activas a la vez</li>
+            <li>Entrega en 48 hs</li>
+            <li>Revisiones ilimitadas</li>
+            <li>Branding completo + redes sociales</li>
+            <li>Archivos editables (AI/PSD)</li>
+            <li>Comunicación por Telegram</li>
+            <li>Pausar o cancelar cuando quieras</li>
+          </ul>
+        </div>
+        <div class="plan-footer-shop">
+          <button class="subscribe-btn" onclick="handleSubscribe('Profesional','399')">
+            Suscribirme al Profesional
+          </button>
+        </div>
+      </div>
+
+      <!-- Plan Studio -->
+      <div class="plan-card-shop">
+        <div class="plan-top-shop">
+          <div class="plan-name-shop">Studio</div>
+          <div class="plan-sub-shop">Para proyectos intensos</div>
+          <div class="plan-price-shop">
+            <span class="price-new">€699<span class="price-per">/mes</span></span>
+          </div>
+        </div>
+        <div class="plan-body-shop">
+          <ul>
+            <li>3 solicitudes activas a la vez</li>
+            <li>Entrega en 24 hs (prioridad)</li>
+            <li>Revisiones ilimitadas</li>
+            <li>Todo lo del plan Profesional</li>
+            <li>Mockups ilimitados</li>
+            <li>Llamada mensual de estrategia</li>
+            <li>Pausar o cancelar cuando quieras</li>
+          </ul>
+        </div>
+        <div class="plan-footer-shop">
+          <button class="subscribe-btn" onclick="handleSubscribe('Studio','699')">
+            Suscribirme al Studio
+          </button>
+        </div>
+      </div>
+
+    </div>
+    <p class="plan-note-shop">¿No sabés cuál elegir? <a href="index.html#contacto" style="color:var(--lime);font-weight:700">Escribime</a> y te ayudo a encontrar el ideal para tu proyecto.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- SERVICIOS POR ENCARGO -->
+<!-- ════════════════════════════════════════════════════════ -->
+<section id="servicios-encargo">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="section-label">Servicios por encargo</div>
+    <h2 class="section-h2">Proyectos<br>a medida</h2>
+    <p class="section-sub">Cada proyecto es único. Hablamos, entiendo tu necesidad y te presupuesto sin compromiso.</p>
+
+    <div class="services-shop-grid">
+
+      <div class="service-shop-card">
+        <div class="service-icon-shop">◈</div>
+        <div>
+          <div class="service-label-shop">Identidad completa</div>
+          <div class="service-name-shop">Identidad de Marca</div>
+        </div>
+        <p class="service-desc-shop">Creo tu marca desde cero: logo, paleta de colores, tipografía y guía de uso. Todo lo que necesitás para presentarte profesionalmente.</p>
+        <ul class="service-includes">
+          <li>Logo en todos los formatos</li>
+          <li>Manual de marca</li>
+          <li>Paleta de colores y tipografías</li>
+          <li>Aplicaciones básicas</li>
+        </ul>
+        <div class="service-price-note">Precio según alcance</div>
+        <a href="index.html#contacto" class="btn-primary" style="margin-top:1rem;display:inline-block">Consultar precio</a>
+      </div>
+
+      <div class="service-shop-card">
+        <div class="service-icon-shop">◉</div>
+        <div>
+          <div class="service-label-shop">Contenido visual</div>
+          <div class="service-name-shop">Redes Sociales</div>
+        </div>
+        <p class="service-desc-shop">Templates, posts y stories diseñados con la identidad de tu marca para que tu feed tenga coherencia visual y atraiga clientes.</p>
+        <ul class="service-includes">
+          <li>Pack de templates editables</li>
+          <li>Diseño de feed y stories</li>
+          <li>Guía de uso en Canva o Figma</li>
+          <li>Highlights y portadas</li>
+        </ul>
+        <div class="service-price-note">Precio según alcance</div>
+        <a href="index.html#contacto" class="btn-primary" style="margin-top:1rem;display:inline-block">Consultar precio</a>
+      </div>
+
+      <div class="service-shop-card">
+        <div class="service-icon-shop">▦</div>
+        <div>
+          <div class="service-label-shop">Piezas gráficas</div>
+          <div class="service-name-shop">Materiales de Marketing</div>
+        </div>
+        <p class="service-desc-shop">Flyers, banners, presentaciones y cualquier material impreso o digital que necesite tu negocio para comunicar mejor.</p>
+        <ul class="service-includes">
+          <li>Flyers y banners digitales</li>
+          <li>Presentaciones corporativas</li>
+          <li>Papelería e impresión</li>
+          <li>Publicidad digital</li>
+        </ul>
+        <div class="service-price-note">Precio según alcance</div>
+        <a href="index.html#contacto" class="btn-primary" style="margin-top:1rem;display:inline-block">Consultar precio</a>
+      </div>
+
+      <div class="service-shop-card">
+        <div class="service-icon-shop">↺</div>
+        <div>
+          <div class="service-label-shop">Marca existente</div>
+          <div class="service-name-shop">Soporte de Marca</div>
+        </div>
+        <p class="service-desc-shop">Ya tenés tu marca pero necesitás piezas nuevas, adaptaciones o una actualización. Me sumo a tu identidad existente y la hago crecer.</p>
+        <ul class="service-includes">
+          <li>Nuevas piezas en tu línea gráfica</li>
+          <li>Adaptaciones y rediseños</li>
+          <li>Actualización de identidad</li>
+          <li>Consistencia cross-channel</li>
+        </ul>
+        <div class="service-price-note">Precio según alcance</div>
+        <a href="index.html#contacto" class="btn-primary" style="margin-top:1rem;display:inline-block">Consultar precio</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- RECURSOS DIGITALES -->
+<!-- ════════════════════════════════════════════════════════ -->
+<section id="recursos-digitales">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="section-label" style="color:var(--blue)">Recursos digitales</div>
+    <h2 class="section-h2">Herramientas listas<br>para usar</h2>
+    <p class="section-sub">Descargás, abrís en Canva o Illustrator y lo usás desde hoy. Sin experiencia técnica necesaria.</p>
+
+    <div class="products-grid">
+
+      <!-- Producto 1 — placeholder -->
+      <div class="product-card">
+        <div class="product-thumb" style="background:var(--blue)">
+          <span>📐</span>
+          <span class="product-soon">Próximamente</span>
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Templates · Canva</div>
+          <div class="product-name">Kit de Templates de Instagram</div>
+          <p class="product-desc">30 plantillas editables para feed y stories. Coherencia visual instantánea para tu marca.</p>
+          <div class="product-footer">
+            <div class="product-price"><span class="currency">€</span>29</div>
+            <button class="add-to-cart-btn" disabled>Próximamente</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Producto 2 — placeholder -->
+      <div class="product-card">
+        <div class="product-thumb" style="background:var(--hot-pink)">
+          <span>🎨</span>
+          <span class="product-soon">Próximamente</span>
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Guía · PDF</div>
+          <div class="product-name">Guía de Branding Completa</div>
+          <p class="product-desc">Todo lo que necesitás saber para construir una marca coherente y memorable. Con ejemplos reales.</p>
+          <div class="product-footer">
+            <div class="product-price"><span class="currency">€</span>49</div>
+            <button class="add-to-cart-btn" disabled>Próximamente</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Producto 3 — placeholder -->
+      <div class="product-card">
+        <div class="product-thumb" style="background:var(--purple)">
+          <span>✍️</span>
+          <span class="product-soon">Próximamente</span>
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Tipografías · Guía</div>
+          <div class="product-name">Pack de Fuentes Curadas</div>
+          <p class="product-desc">25 combinaciones tipográficas para marcas. Con guía de uso, pares recomendados y links de descarga.</p>
+          <div class="product-footer">
+            <div class="product-price"><span class="currency">€</span>19</div>
+            <button class="add-to-cart-btn" disabled>Próximamente</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Producto 4 — placeholder -->
+      <div class="product-card">
+        <div class="product-thumb" style="background:var(--dark)">
+          <span>▶️</span>
+          <span class="product-soon">Próximamente</span>
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Templates · Canva</div>
+          <div class="product-name">Kit de Canva para Reels</div>
+          <p class="product-desc">20 plantillas de Reels con hooks visuales de alto impacto. Copy incluido y fácil de personalizar.</p>
+          <div class="product-footer">
+            <div class="product-price"><span class="currency">€</span>35</div>
+            <button class="add-to-cart-btn" disabled>Próximamente</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="text-align:center;margin-top:3rem;padding:2rem;background:var(--dark);max-width:560px;margin-left:auto;margin-right:auto;box-shadow:6px 6px 0 0 #000">
+      <div style="font-family:'Rock Salt',cursive;font-size:.65rem;letter-spacing:3px;color:var(--lime);margin-bottom:.75rem">Notificame</div>
+      <div style="font-family:'Calistoga',serif;font-size:1.4rem;color:#fff;margin-bottom:.5rem">¿Querés saber cuando estén listos?</div>
+      <p style="font-size:.9rem;color:rgba(255,255,255,.6);margin-bottom:1.2rem">Dejá tu mail y te aviso antes que nadie.</p>
+      <form id="notifyForm" style="display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center">
+        <input type="email" placeholder="Tu email aquí..." required
+          style="font-family:'Nunito',sans-serif;font-size:1rem;border:3px solid rgba(255,255,255,.2);
+          padding:12px 16px;outline:none;background:rgba(255,255,255,.08);color:#fff;flex:1;min-width:200px"/>
+        <button type="submit" class="btn-primary" style="background:var(--lime);color:var(--dark);box-shadow:4px 4px 0 0 #000">Avisame</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  &copy; 2026 <span>Batifondo</span> · Florencia Angilletta ·
+  <a href="index.html">Inicio</a>
+  <a href="tienda.html">Tienda</a>
+  <a href="portal.html">Mi cuenta</a>
+</footer>
+
+<!-- CART PANEL -->
+<div id="cart-overlay"></div>
+<div id="cart-panel">
+  <div class="cart-header">
+    <h2>Tu carrito</h2>
+    <button class="cart-close" id="cartClose">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty" id="cartEmpty">
+      <div class="empty-icon">🛒</div>
+      <p>Tu carrito está vacío.<br>Agregá productos para continuar.</p>
+    </div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total">
+      <span class="cart-total-label">Total</span>
+      <span class="cart-total-amount" id="cartTotal">€0</span>
+    </div>
+    <button class="checkout-btn" id="checkoutBtn">Ir al pago →</button>
+    <p class="cart-note">Serás redirigido a Stripe para completar tu compra de forma segura.</p>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── HAMBURGER ──────────────────────────────────────────────────────────────
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('nav-links').classList.toggle('open');
+});
+
+// ── CART STATE ─────────────────────────────────────────────────────────────
+const CART_KEY = 'batifondo_cart';
+
+function getCart() {
+  try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; }
+  catch { return []; }
+}
+
+function saveCart(cart) {
+  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+}
+
+function addToCart(product) {
+  const cart = getCart();
+  const existing = cart.find(i => i.id === product.id);
+  if (existing) {
+    existing.qty = (existing.qty || 1) + 1;
+  } else {
+    cart.push({ ...product, qty: 1 });
+  }
+  saveCart(cart);
+  updateCartUI();
+  showToast(`"${product.name}" agregado al carrito`);
+}
+
+function removeFromCart(id) {
+  const cart = getCart().filter(i => i.id !== id);
+  saveCart(cart);
+  updateCartUI();
+}
+
+function updateCartUI() {
+  const cart = getCart();
+  const total = cart.reduce((s, i) => s + (i.price * (i.qty || 1)), 0);
+  const count = cart.reduce((s, i) => s + (i.qty || 1), 0);
+
+  // Count badge
+  const badge = document.getElementById('cartCount');
+  if (count > 0) {
+    badge.textContent = count;
+    badge.classList.add('visible');
+  } else {
+    badge.classList.remove('visible');
+  }
+
+  // Items list
+  const itemsEl = document.getElementById('cartItems');
+  const emptyEl = document.getElementById('cartEmpty');
+  const footerEl = document.getElementById('cartFooter');
+  const totalEl = document.getElementById('cartTotal');
+
+  if (cart.length === 0) {
+    emptyEl.style.display = 'block';
+    footerEl.style.display = 'none';
+    itemsEl.innerHTML = '';
+    itemsEl.appendChild(emptyEl);
+    return;
+  }
+
+  emptyEl.style.display = 'none';
+  footerEl.style.display = 'block';
+  totalEl.textContent = `€${total}`;
+
+  const items = cart.map(item => `
+    <div class="cart-item">
+      <div class="cart-item-icon">${item.icon || '📦'}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-type">${item.cat || 'Recurso digital'}</div>
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-price">€${item.price}${item.qty > 1 ? ` × ${item.qty}` : ''}</div>
+      </div>
+      <button class="cart-item-remove" onclick="removeFromCart('${item.id}')" title="Eliminar">✕</button>
+    </div>
+  `).join('');
+
+  itemsEl.innerHTML = items;
+}
+
+// ── CART PANEL TOGGLE ──────────────────────────────────────────────────────
+function openCart() {
+  document.getElementById('cart-panel').classList.add('open');
+  document.getElementById('cart-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCart() {
+  document.getElementById('cart-panel').classList.remove('open');
+  document.getElementById('cart-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('cartBtn').addEventListener('click', openCart);
+document.getElementById('cartClose').addEventListener('click', closeCart);
+document.getElementById('cart-overlay').addEventListener('click', closeCart);
+
+// ── CHECKOUT ───────────────────────────────────────────────────────────────
+document.getElementById('checkoutBtn').addEventListener('click', () => {
+  // TODO: reemplazar con Stripe Payment Link real cuando esté disponible
+  showToast('Próximamente: pago online con Stripe');
+});
+
+// ── SUBSCRIPTIONS ──────────────────────────────────────────────────────────
+function handleSubscribe(plan, price) {
+  // TODO: reemplazar URL con Stripe Payment Link de cada plan
+  showToast(`Redirigiendo a Stripe para el plan ${plan}...`);
+  // window.location.href = 'https://buy.stripe.com/TU_LINK_AQUI';
+}
+
+// ── NOTIFY FORM ────────────────────────────────────────────────────────────
+document.getElementById('notifyForm').addEventListener('submit', e => {
+  e.preventDefault();
+  showToast('¡Listo! Te aviso cuando estén disponibles.');
+  e.target.reset();
+});
+
+// ── TOAST ──────────────────────────────────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ── INIT ───────────────────────────────────────────────────────────────────
+updateCartUI();
+</script>
+</body>
+</html>
